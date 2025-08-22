@@ -1,0 +1,153 @@
+# Multi-Container SLAM System - Docker Compose Configuration
+version: '3.8'
+
+services:
+  # SLAM Backend - ROS2 processing only (no GUI)
+  slam-backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+      target: production
+    container_name: python-slam-backend
+    volumes:
+      - .:/workspace/src/python_slam
+      - slam_logs:/workspace/logs
+      - slam_data:/workspace/data
+      - ./config:/workspace/config:ro
+    environment:
+      - PYTHONPATH=/workspace/src/python_slam/src
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - RMW_IMPLEMENTATION=rmw_cyclonedx_cpp
+      - CYCLONEDX_URI=file:///workspace/config/cyclonedx.xml
+    networks:
+      - slam-network
+    ports:
+      - "14540:14540"  # PX4 connection
+      - "5555:5555"    # UCI command port
+      - "5556:5556"    # UCI telemetry port
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ros2", "node", "list", "|", "grep", "-q", "slam_node"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: >
+      bash -c "
+        source /opt/ros/humble/setup.bash &&
+        source /workspace/install/setup.bash &&
+        ros2 launch python_slam slam_backend_launch.py
+      "
+
+  # SLAM Visualization - PyQt5 GUI only
+  slam-visualization:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.visualization
+      target: production
+    container_name: python-slam-visualization
+    volumes:
+      - .:/workspace/src/python_slam
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - PYTHONPATH=/workspace/src/python_slam/src
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - RMW_IMPLEMENTATION=rmw_cyclonedx_cpp
+      - CYCLONEDX_URI=file:///workspace/config/cyclonedx.xml
+    networks:
+      - slam-network
+    depends_on:
+      - slam-backend
+    restart: unless-stopped
+    command: >
+      bash -c "
+        source /opt/ros/humble/setup.bash &&
+        source /workspace/install/setup.bash &&
+        python3 src/python_slam/gui/slam_visualizer.py
+      "
+
+  # Development environment for backend
+  slam-dev-backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+      target: development
+    container_name: python-slam-dev-backend
+    volumes:
+      - .:/workspace/src/python_slam
+      - slam_dev_logs:/workspace/logs
+    environment:
+      - PYTHONPATH=/workspace/src/python_slam/src
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    networks:
+      - slam-network
+    stdin_open: true
+    tty: true
+    working_dir: /workspace/src/python_slam
+    command: bash
+
+  # Development environment for visualization
+  slam-dev-visualization:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.visualization
+      target: development
+    container_name: python-slam-dev-visualization
+    volumes:
+      - .:/workspace/src/python_slam
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - PYTHONPATH=/workspace/src/python_slam/src
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    networks:
+      - slam-network
+    stdin_open: true
+    tty: true
+    working_dir: /workspace/src/python_slam
+    command: bash
+
+  # Testing environment
+  slam-test:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+      target: development
+    container_name: python-slam-test
+    volumes:
+      - .:/workspace/src/python_slam
+    environment:
+      - PYTHONPATH=/workspace/src/python_slam/src
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    networks:
+      - slam-network
+    working_dir: /workspace/src/python_slam
+    command: >
+      bash -c "
+        source /opt/ros/humble/setup.bash &&
+        source /workspace/install/setup.bash &&
+        python -m pytest tests/ -v --cov=src --cov-report=html --cov-report=term
+      "
+
+networks:
+  slam-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+    name: python-slam-network
+
+volumes:
+  slam_logs:
+    driver: local
+    name: python-slam-logs
+  slam_data:
+    driver: local
+    name: python-slam-data
+  slam_dev_logs:
+    driver: local
+    name: python-slam-dev-logs

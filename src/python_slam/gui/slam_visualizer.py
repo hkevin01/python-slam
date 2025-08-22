@@ -1,5 +1,6 @@
 """
 Enhanced 3D SLAM Visualizer using PyQt5 and PyOpenGL
+Now supports multi-container architecture with ZMQ communication
 
 This module provides a comprehensive GUI for visualizing SLAM operations including:
 - Real-time 3D point cloud visualization
@@ -7,6 +8,7 @@ This module provides a comprehensive GUI for visualizing SLAM operations includi
 - Feature matching visualization
 - Performance metrics monitoring
 - Interactive controls for playback and analysis
+- Connection to SLAM backend via ZMQ
 """
 
 import sys
@@ -15,7 +17,15 @@ from typing import Optional, List, Tuple
 import cv2
 import threading
 import time
+import json
 from collections import deque
+
+try:
+    import zmq
+    ZMQ_AVAILABLE = True
+except ImportError:
+    print("ZMQ not available. Backend communication will be disabled.")
+    ZMQ_AVAILABLE = False
 
 try:
     from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
@@ -31,8 +41,108 @@ except ImportError:
     print("PyQt5 not available. GUI features will be disabled.")
     PYQT_AVAILABLE = False
 
+
+class SLAMDataReceiver(QThread):
+    """ZMQ receiver thread for SLAM data from backend"""
+
+    # Signals for updating GUI
+    pointcloud_updated = pyqtSignal(np.ndarray, np.ndarray)
+    trajectory_updated = pyqtSignal(np.ndarray)
+    pose_updated = pyqtSignal(dict)
+    map_updated = pyqtSignal(dict)
+    metrics_updated = pyqtSignal(dict)
+    connection_status = pyqtSignal(bool)
+
+    def __init__(self, backend_address="tcp://slam-backend:5555"):
+        super().__init__()
+        self.backend_address = backend_address
+        self.running = False
+        self.socket = None
+        self.context = None
+
+    def run(self):
+        """Main ZMQ receiving loop"""
+        if not ZMQ_AVAILABLE:
+            print("ZMQ not available, cannot connect to backend")
+            return
+
+        self.running = True
+        self.context = zmq.Context()
+        self.socket = self.context.socket(zmq.SUB)
+        self.socket.subscribe("")  # Subscribe to all messages
+
+        try:
+            self.socket.connect(self.backend_address)
+            self.connection_status.emit(True)
+            print(f"Connected to SLAM backend at {self.backend_address}")
+
+            # Set timeout for non-blocking receive
+            self.socket.setsockopt(zmq.RCVTIMEO, 1000)  # 1 second timeout
+
+            while self.running:
+                try:
+                    # Receive data from backend
+                    message = self.socket.recv_json(zmq.NOBLOCK)
+                    self.process_backend_data(message)
+
+                except zmq.Again:
+                    # No message received, continue
+                    continue
+                except zmq.ZMQError as e:
+                    print(f"ZMQ Error: {e}")
+                    self.connection_status.emit(False)
+                    break
+                except Exception as e:
+                    print(f"Error processing message: {e}")
+
+        except Exception as e:
+            print(f"Failed to connect to backend: {e}")
+            self.connection_status.emit(False)
+        finally:
+            if self.socket:
+                self.socket.close()
+            if self.context:
+                self.context.term()
+
+    def process_backend_data(self, data):
+        """Process data received from SLAM backend"""
+        try:
+            if 'pose' in data and data['pose'] is not None:
+                self.pose_updated.emit(data['pose'])
+
+            if 'trajectory' in data and data['trajectory']:
+                trajectory_array = np.array(data['trajectory'])
+                self.trajectory_updated.emit(trajectory_array)
+
+            if 'pointcloud' in data and data['pointcloud'] is not None:
+                # Convert pointcloud data to numpy arrays
+                points = np.array(data['pointcloud']['points'])
+                colors = np.ones((len(points), 4)) * 0.8  # Default color
+                self.pointcloud_updated.emit(points, colors)
+
+            if 'map' in data and data['map'] is not None:
+                self.map_updated.emit(data['map'])
+
+            # Calculate and emit metrics
+            metrics = {
+                'timestamp': data.get('timestamp', time.time()),
+                'pose_available': data.get('pose') is not None,
+                'pointcloud_size': len(data['pointcloud']['points']) if data.get('pointcloud') else 0,
+                'trajectory_length': len(data['trajectory']) if data.get('trajectory') else 0,
+            }
+            self.metrics_updated.emit(metrics)
+
+        except Exception as e:
+            print(f"Error processing backend data: {e}")
+
+    def stop(self):
+        """Stop the receiving thread"""
+        self.running = False
+        self.wait()
+
+
 class SLAMDataProcessor(QThread):
-    """Background thread for processing SLAM data"""
+    """Background thread for processing SLAM data - maintained for compatibility"""
 
     # Signals for updating GUI
     pointcloud_updated = pyqtSignal(np.ndarray, np.ndarray)
@@ -85,20 +195,22 @@ class SLAMDataProcessor(QThread):
         self.wait()
 
 class SLAMVisualizer(QMainWindow):
-    """Main SLAM visualization window"""
+    """Main SLAM visualization window with backend connectivity"""
 
-    def __init__(self):
+    def __init__(self, backend_address="tcp://slam-backend:5555"):
         super().__init__()
         if not PYQT_AVAILABLE:
             raise ImportError("PyQt5 not available for GUI")
 
-        self.setWindowTitle("Python-SLAM Advanced Visualizer")
+        self.setWindowTitle("Python-SLAM Multi-Container Visualizer")
         self.setGeometry(100, 100, 1600, 1000)
 
         # Initialize data storage
         self.trajectory_data = []
         self.pointcloud_data = None
         self.current_frame = None
+        self.current_pose = None
+        self.backend_connected = False
         self.metrics_history = {
             'pose_error': [],
             'tracked_features': [],
@@ -106,7 +218,16 @@ class SLAMVisualizer(QMainWindow):
             'timestamps': []
         }
 
-        # Initialize background processor
+        # Initialize ZMQ data receiver for backend communication
+        self.data_receiver = SLAMDataReceiver(backend_address)
+        self.data_receiver.pointcloud_updated.connect(self.update_pointcloud)
+        self.data_receiver.trajectory_updated.connect(self.update_trajectory)
+        self.data_receiver.pose_updated.connect(self.update_pose)
+        self.data_receiver.map_updated.connect(self.update_map)
+        self.data_receiver.metrics_updated.connect(self.update_metrics)
+        self.data_receiver.connection_status.connect(self.update_connection_status)
+
+        # Keep the old data processor for compatibility/local data
         self.data_processor = SLAMDataProcessor()
         self.data_processor.pointcloud_updated.connect(self.update_pointcloud)
         self.data_processor.trajectory_updated.connect(self.update_trajectory)
@@ -125,6 +246,33 @@ class SLAMVisualizer(QMainWindow):
         # State
         self.is_playing = False
         self.playback_speed = 1.0
+
+        # Start the backend data receiver
+        if ZMQ_AVAILABLE:
+            self.data_receiver.start()
+            print(f"Started ZMQ receiver for backend: {backend_address}")
+        else:
+            print("ZMQ not available - running in standalone mode")
+
+    def update_connection_status(self, connected):
+        """Update the connection status to backend"""
+        self.backend_connected = connected
+        if hasattr(self, 'connection_label'):
+            if connected:
+                self.connection_label.setText("Backend: Connected")
+                self.connection_label.setStyleSheet("color: green;")
+            else:
+                self.connection_label.setText("Backend: Disconnected")
+                self.connection_label.setStyleSheet("color: red;")
+
+    def update_pose(self, pose_data):
+        """Update current pose from backend"""
+        self.current_pose = pose_data
+
+    def update_map(self, map_data):
+        """Update map data from backend"""
+        # Handle map updates from backend
+        pass
 
     def setup_ui(self):
         """Setup the main UI components"""
@@ -563,9 +711,15 @@ class SLAMVisualizer(QMainWindow):
         parent_layout.addLayout(control_layout)
 
     def setup_status_bar(self):
-        """Setup status bar at bottom"""
-        self.statusBar().showMessage("Ready")
-        self.statusBar().setStyleSheet("background-color: #3b3b3b; color: #ffffff;")
+        """Setup status bar at bottom with connection indicator"""
+        status_bar = self.statusBar()
+        status_bar.showMessage("Ready")
+        status_bar.setStyleSheet("background-color: #3b3b3b; color: #ffffff;")
+
+        # Add connection status label
+        self.connection_label = QLabel("Backend: Disconnected")
+        self.connection_label.setStyleSheet("color: red; margin-right: 10px;")
+        status_bar.addPermanentWidget(self.connection_label)
 
     @pyqtSlot(np.ndarray, np.ndarray)
     def update_pointcloud(self, points, colors):
@@ -820,6 +974,8 @@ class SLAMVisualizer(QMainWindow):
         """Handle window close event"""
         if self.data_processor.isRunning():
             self.data_processor.stop()
+        if hasattr(self, 'data_receiver') and self.data_receiver.isRunning():
+            self.data_receiver.stop()
         event.accept()
 
 def create_slam_gui(slam_system=None):

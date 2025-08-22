@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CycloneDX>
+    <Domain>
+        <Id>0</Id>
+        <Discovery>
+            <ParticipantIndex>auto</ParticipantIndex>
+            <Peers>
+                <!-- Allow discovery within the docker network -->
+                <Peer address="slam-backend" />
+                <Peer address="slam-visualization" />
+                <Peer address="172.20.0.0/16" />
+                <Peer address="localhost" />
+            </Peers>
+            <Ports>
+                <Base>7400</Base>
+                <DGain>250</DGain>
+                <PGain>2</PGain>
+                <D0>0</D0>
+                <D1>10</D1>
+                <D2>1</D2>
+                <D3>11</D3>
+            </Ports>
+        </Discovery>
+        <General>
+            <EnableMulticastLoopback>true</EnableMulticastLoopback>
+            <MaxMessageSize>65536</MaxMessageSize>
+            <FragmentSize>1300</FragmentSize>
+        </General>
+        <Internal>
+            <Watermarks>
+                <WhcHigh>500kB</WhcHigh>
+                <WhcLow>32kB</WhcLow>
+            </Watermarks>
+            <TransportSelector>
+                <Default>udp</Default>
+            </TransportSelector>
+        </Internal>
+        <Tracing>
+            <Verbosity>config</Verbosity>
+            <OutputFile>stdout</OutputFile>
+        </Tracing>
+    </Domain>
+</CycloneDX>

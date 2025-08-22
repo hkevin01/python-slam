@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CycloneDX>
+    <Domain>
+        <Id>0</Id>
+        <Discovery>
+            <ParticipantIndex>auto</ParticipantIndex>
+            <Peers>
+                <!-- Allow discovery within the docker network -->
+                <Peer address="172.20.0.0/16" />
+                <Peer address="localhost" />
+            </Peers>
+        </Discovery>
+        <General>
+            <EnableMulticastLoopback>true</EnableMulticastLoopback>
+            <MaxMessageSize>65536</MaxMessageSize>
+        </General>
+        <Internal>
+            <Watermarks>
+                <WhcHigh>500kB</WhcHigh>
+            </Watermarks>
+        </Internal>
+        <Tracing>
+            <Verbosity>config</Verbosity>
+            <OutputFile>stdout</OutputFile>
+        </Tracing>
+    </Domain>
+</CycloneDX>
