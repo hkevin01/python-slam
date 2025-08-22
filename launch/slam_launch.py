@@ -7,6 +7,7 @@ Launches the complete SLAM pipeline with all necessary nodes
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, LogInfo
 from launch.substitutions import LaunchConfiguration, TextSubstitution
+from launch.conditions import IfCondition, UnlessCondition
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 import os
@@ -52,10 +53,53 @@ def generate_launch_description():
         description='Whether to launch RViz'
     )
 
+    # Defense-oriented launch arguments
+    enable_px4_arg = DeclareLaunchArgument(
+        'enable_px4',
+        default_value='false',
+        description='Enable PX4 integration for UAS operations'
+    )
+
+    enable_uci_arg = DeclareLaunchArgument(
+        'enable_uci',
+        default_value='false',
+        description='Enable UCI interface for defense applications'
+    )
+
+    enable_oms_arg = DeclareLaunchArgument(
+        'enable_oms',
+        default_value='false',
+        description='Enable OMS integration'
+    )
+
+    classification_level_arg = DeclareLaunchArgument(
+        'classification_level',
+        default_value='UNCLASSIFIED',
+        description='Security classification level'
+    )
+
+    px4_connection_arg = DeclareLaunchArgument(
+        'px4_connection',
+        default_value='udp://:14540',
+        description='PX4 connection string'
+    )
+
+    uci_command_port_arg = DeclareLaunchArgument(
+        'uci_command_port',
+        default_value='5555',
+        description='UCI command port'
+    )
+
+    uci_telemetry_port_arg = DeclareLaunchArgument(
+        'uci_telemetry_port',
+        default_value='5556',
+        description='UCI telemetry port'
+    )
+
     # Get package path for config files
     package_path = FindPackageShare('python_slam')
 
-    # SLAM main node
+    # SLAM main node with enhanced defense capabilities
     slam_node = Node(
         package='python_slam',
         executable='slam_node',
@@ -67,6 +111,23 @@ def generate_launch_description():
             {'odom_topic': LaunchConfiguration('odom_topic')},
             {'map_frame': LaunchConfiguration('map_frame')},
             {'base_frame': LaunchConfiguration('base_frame')},
+            # Defense-oriented parameters
+            {'enable_px4': LaunchConfiguration('enable_px4')},
+            {'enable_uci': LaunchConfiguration('enable_uci')},
+            {'enable_oms': LaunchConfiguration('enable_oms')},
+            {'classification_level': LaunchConfiguration('classification_level')},
+            {'px4_connection': LaunchConfiguration('px4_connection')},
+            {'uci_command_port': LaunchConfiguration('uci_command_port')},
+            {'uci_telemetry_port': LaunchConfiguration('uci_telemetry_port')},
+            # Enhanced SLAM parameters
+            {'max_features': 1000},
+            {'keyframe_distance': 1.0},
+            {'enable_vio': True},
+            {'enable_loop_closure': True},
+            {'enable_mapping': True},
+            {'processing_frequency': 30.0},
+            {'state_publish_frequency': 50.0},
+            {'map_publish_frequency': 1.0},
         ],
         remappings=[
             ('/camera/image_raw', LaunchConfiguration('camera_topic')),
@@ -151,6 +212,34 @@ def generate_launch_description():
         ]
     )
 
+    # PX4 Bridge Node (conditional for UAS operations)
+    px4_bridge_node = Node(
+        package='python_slam',
+        executable='px4_bridge_node',
+        name='px4_bridge',
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('enable_px4')),
+        parameters=[
+            {'px4_connection': LaunchConfiguration('px4_connection')},
+            {'classification_level': LaunchConfiguration('classification_level')},
+        ]
+    )
+
+    # UCI Interface Node (conditional for defense applications)
+    uci_interface_node = Node(
+        package='python_slam',
+        executable='uci_interface_node',
+        name='uci_interface',
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('enable_uci')),
+        parameters=[
+            {'command_port': LaunchConfiguration('uci_command_port')},
+            {'telemetry_port': LaunchConfiguration('uci_telemetry_port')},
+            {'classification_level': LaunchConfiguration('classification_level')},
+            {'node_id': 'SLAM_UCI_NODE'},
+        ]
+    )
+
     # RViz node (conditional)
     rviz_config_path = os.path.join(package_path, 'rviz', 'slam_config.rviz')
     rviz_node = Node(
@@ -170,11 +259,19 @@ def generate_launch_description():
         map_frame_arg,
         base_frame_arg,
         use_rviz_arg,
+        # Defense-oriented arguments
+        enable_px4_arg,
+        enable_uci_arg,
+        enable_oms_arg,
+        classification_level_arg,
+        px4_connection_arg,
+        uci_command_port_arg,
+        uci_telemetry_port_arg,
 
         # Log info
-        LogInfo(msg=['Launching Python SLAM pipeline...']),
+        LogInfo(msg=['Launching Python SLAM pipeline with defense capabilities...']),
 
-        # Nodes
+        # Core SLAM nodes
         slam_node,
         feature_extraction_node,
         pose_estimation_node,
@@ -182,5 +279,11 @@ def generate_launch_description():
         localization_node,
         loop_closure_node,
         flight_integration_node,
+
+        # Defense-oriented nodes (conditional)
+        px4_bridge_node,
+        uci_interface_node,
+
+        # Visualization
         rviz_node,
     ])

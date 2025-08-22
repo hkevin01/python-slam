@@ -35,6 +35,12 @@ setup(
         'numpy',
         'scipy',
         'matplotlib',
+        # Defense-oriented dependencies
+        'mavsdk',
+        'zmq',
+        'asyncio',
+        'PyQt5',
+        'pyproj',
     ],
     zip_safe=True,
     maintainer='Python SLAM Team',
@@ -52,6 +58,10 @@ setup(
             'loop_closure_node = python_slam.loop_closure_node:main',
             'flight_integration_node = python_slam.flight_integration_node:main',
             'slam_pipeline = python_slam.basic_slam_pipeline:main',
+            # Defense-oriented executables
+            'px4_bridge_node = python_slam.px4_bridge_node:main',
+            'uci_interface_node = python_slam.uci_interface_node:main',
+            'enhanced_visualization_node = python_slam.enhanced_visualization_node:main',
         ],
     },
 )

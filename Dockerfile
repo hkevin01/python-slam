@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Python SLAM with ROS 2 support
+# Defense-Oriented Multi-stage Dockerfile for Python SLAM with ROS 2, PX4, and UCI support
 FROM ros:humble-ros-base-jammy as base
 
 # Set environment variables
@@ -7,8 +7,10 @@ ENV PYTHONUNBUFFERED=1
 ENV ROS_DISTRO=humble
 ENV COLCON_WS=/workspace
 ENV SHELL=/bin/bash
+ENV CLASSIFICATION_LEVEL=UNCLASSIFIED
+ENV DEFENSE_MODE=true
 
-# Install system dependencies
+# Install system dependencies (enhanced for defense operations)
 RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-dev \
@@ -18,6 +20,8 @@ RUN apt-get update && apt-get install -y \
     python3-scipy \
     python3-matplotlib \
     python3-yaml \
+    python3-pyqt5 \
+    python3-zmq \
     git \
     curl \
     wget \
@@ -39,6 +43,17 @@ RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     python3-rosdep \
     && rm -rf /var/lib/apt/lists/*
+
+# Install defense-oriented Python packages
+RUN pip3 install --no-cache-dir \
+    mavsdk==1.4.10 \
+    mavsdk-server==1.4.10 \
+    pyzmq==25.1.0 \
+    cryptography==41.0.3 \
+    asyncio-mqtt==0.16.1 \
+    lxml==4.9.2 \
+    pyproj==3.6.0 \
+    xmltodict==0.13.0
 
 # Initialize rosdep (skip if already exists)
 RUN if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then rosdep init; fi && rosdep update
@@ -69,7 +84,7 @@ RUN apt-get update && apt-get install -y \
     python3-flake8 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install additional Python development packages
+# Install additional Python development packages (defense-enhanced)
 RUN pip3 install --no-cache-dir \
     ipython \
     jupyter \
@@ -77,27 +92,54 @@ RUN pip3 install --no-cache-dir \
     mypy \
     isort \
     black \
-    pylint
+    pylint \
+    pytest-asyncio \
+    pytest-mock
 
 # Set up development environment
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
     echo "source ${COLCON_WS}/install/setup.bash" >> ~/.bashrc && \
     echo "export PYTHONPATH=${COLCON_WS}/src/python_slam/src:\$PYTHONPATH" >> ~/.bashrc
 
-# Production stage
+# Production stage (defense-enhanced)
 FROM base as production
+
+# Create defense user for security
+RUN groupadd -r defense && useradd -r -g defense defense
+
+# Create configuration directories
+RUN mkdir -p /workspace/config/defense \
+    /workspace/logs/defense \
+    /workspace/missions \
+    /workspace/keys
 
 # Build the ROS 2 workspace
 RUN cd ${COLCON_WS} && \
     rosdep install --from-paths src --ignore-src -r -y && \
     colcon build --packages-select python_slam
 
+# Set proper permissions
+RUN chown -R defense:defense /workspace && \
+    chmod 750 /workspace/config/defense \
+    /workspace/logs/defense \
+    /workspace/missions
+
 # Source the workspace
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
     echo "source ${COLCON_WS}/install/setup.bash" >> ~/.bashrc
 
+# Expose defense ports
+EXPOSE 5555 5556 14540 14541
+
+# Health check for defense monitoring
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD ros2 node list | grep -q slam_node || exit 1
+
+# Switch to defense user
+USER defense
+
 # Set the default command
-CMD ["bash"]
+CMD ["ros2", "launch", "python_slam", "slam_launch.py"]
 
 # Runtime stage for minimal deployment
 FROM ros:humble-ros-core-jammy as runtime

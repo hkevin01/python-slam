@@ -3,7 +3,8 @@
 <package format="3">
     <name>python_slam</name>
     <version>1.0.0</version>
-    <description>Advanced Python SLAM package for aerial drone competitions with ROS 2 integration</description>
+    <description>Advanced Python SLAM package for aerial drone competitions with ROS 2 integration
+        and defense-oriented capabilities</description>
 
     <maintainer email="developer@python-slam.org">Python SLAM Team</maintainer>
     <license>MIT</license>
@@ -34,6 +35,10 @@
     <exec_depend>python3-numpy</exec_depend>
     <exec_depend>python3-scipy</exec_depend>
     <exec_depend>python3-matplotlib</exec_depend>
+    <!-- Defense-oriented dependencies -->
+    <exec_depend>python3-pyqt5</exec_depend>
+    <exec_depend>python3-zmq</exec_depend>
+    <exec_depend>python3-asyncio</exec_depend>
 
     <!-- Test dependencies -->
     <test_depend>ament_copyright</test_depend>

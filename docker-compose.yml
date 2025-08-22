@@ -1,7 +1,48 @@
+# Defense SLAM System - Docker Compose Configuration
 version: '3.8'
 
 services:
-  # Development environment with full tooling
+  # Main Defense SLAM system
+  defense-slam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: defense-slam-main
+    environment:
+      - CLASSIFICATION_LEVEL=${CLASSIFICATION_LEVEL:-UNCLASSIFIED}
+      - DEFENSE_MODE=true
+      - UCI_ENABLED=${UCI_ENABLED:-false}
+      - PX4_ENABLED=${PX4_ENABLED:-false}
+      - OMS_ENABLED=${OMS_ENABLED:-false}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    volumes:
+      - ./config:/workspace/config:ro
+      - ./missions:/workspace/missions:ro
+      - defense_logs:/workspace/logs
+      - defense_data:/workspace/data
+    ports:
+      - "5555:5555"  # UCI Command Port
+      - "5556:5556"  # UCI Telemetry Port
+      - "14540:14540"  # PX4 MAVLink
+      - "14541:14541"  # PX4 MAVLink FTP
+    networks:
+      - defense-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ros2", "node", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+
+  # Development environment with full tooling (enhanced for defense)
   slam-dev:
     build:
       context: .
@@ -12,10 +53,14 @@ services:
       - .:/workspace/src/python_slam
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - $HOME/.Xauthority:/root/.Xauthority:rw
+      - defense_dev_logs:/workspace/logs
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - PYTHONPATH=/workspace/src/python_slam/src
+      - CLASSIFICATION_LEVEL=UNCLASSIFIED
+      - DEFENSE_MODE=false
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
     network_mode: host
     stdin_open: true
     tty: true
@@ -91,9 +136,24 @@ services:
       "
 
 networks:
+  defense-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+    name: defense-slam-network
   default:
     driver: bridge
 
 volumes:
+  defense_logs:
+    driver: local
+    name: defense-slam-logs
+  defense_data:
+    driver: local
+    name: defense-slam-data
+  defense_dev_logs:
+    driver: local
+    name: defense-slam-dev-logs
   ros_logs:
     driver: local

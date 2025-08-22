@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """
-Main SLAM Node for ROS 2
-Integrates all SLAM components into a unified ROS 2 node
+Enhanced ROS2 SLAM Node for Defense Applications
+Integrates all SLAM components with PX4, UCI/OMS support and advanced autonomy features
 """
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
-from sensor_msgs.msg import Image, CameraInfo, PointCloud2
-from geometry_msgs.msg import PoseStamped, TransformStamped
-from nav_msgs.msg import OccupancyGrid, Path
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
+from sensor_msgs.msg import Image, CameraInfo, PointCloud2, Imu, NavSatFix
+from geometry_msgs.msg import PoseStamped, TransformStamped, TwistStamped
+from nav_msgs.msg import OccupancyGrid, Path, Odometry
+from std_msgs.msg import Header, String
 from tf2_ros import TransformBroadcaster, Buffer, TransformListener
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
 import tf2_geometry_msgs
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict, List
+import threading
+import time
+from scipy.spatial.transform import Rotation
 
 # Import SLAM modules
 from .feature_extraction import FeatureExtraction
@@ -25,9 +29,23 @@ from .localization import Localization
 from .loop_closure import LoopClosure
 from .flight_integration import FlightIntegration
 
+# Import VIO system
+try:
+    from .vio.visual_inertial_odometry import VIOSystem
+    VIO_AVAILABLE = True
+except ImportError:
+    VIO_AVAILABLE = False
+
+# Import sensor fusion
+try:
+    from .fusion.sensor_fusion import SensorFusion
+    FUSION_AVAILABLE = True
+except ImportError:
+    FUSION_AVAILABLE = False
+
 
 class SlamNode(Node):
-    """Main SLAM node that coordinates all SLAM components."""
+    """Enhanced SLAM node for defense applications with ROS2, PX4, and UCI/OMS integration."""
 
     def __init__(self):
         super().__init__('slam_node')
@@ -40,6 +58,9 @@ class SlamNode(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.tf_broadcaster = TransformBroadcaster(self)
 
+        # Thread safety
+        self.processing_lock = threading.Lock()
+
         # Declare parameters
         self._declare_parameters()
 
@@ -48,6 +69,80 @@ class SlamNode(Node):
 
         # Set up QoS profiles
         self._setup_qos_profiles()
+
+        # Set up subscriptions and publications
+        self._setup_subscriptions()
+        self._setup_publications()
+
+        # Initialize state
+        self._initialize_state()
+
+        # Set up timers
+        self._setup_timers()
+
+        # Mission and autonomy state
+        self.mission_state = "IDLE"
+        self.autonomous_mode = False
+
+        self.get_logger().info('Enhanced SLAM Node initialized with defense capabilities')
+
+    def _declare_parameters(self):
+        """Declare ROS2 parameters for configuration."""
+        # Camera and sensor topics
+        self.declare_parameter('camera_topic', '/camera/image_raw')
+        self.declare_parameter('camera_info_topic', '/camera/camera_info')
+        self.declare_parameter('imu_topic', '/imu/data')
+        self.declare_parameter('gps_topic', '/gps/fix')
+
+        # SLAM algorithm parameters
+        self.declare_parameter('max_features', 1000)
+        self.declare_parameter('quality_level', 0.01)
+        self.declare_parameter('min_distance', 10.0)
+        self.declare_parameter('keyframe_distance', 1.0)
+        self.declare_parameter('map_resolution', 0.05)
+
+        # Feature switches
+        self.declare_parameter('enable_vio', True)
+        self.declare_parameter('enable_loop_closure', True)
+        self.declare_parameter('enable_mapping', True)
+        self.declare_parameter('enable_gps_fusion', False)
+
+        # Defense-specific parameters
+        self.declare_parameter('px4_mode', False)
+        self.declare_parameter('uci_interface', False)
+        self.declare_parameter('oms_integration', False)
+        self.declare_parameter('autonomous_navigation', False)
+
+        # Performance parameters
+        self.declare_parameter('processing_frequency', 30.0)
+        self.declare_parameter('state_publish_frequency', 50.0)
+        self.declare_parameter('map_publish_frequency', 1.0)
+
+    def _setup_qos_profiles(self):
+        """Set up QoS profiles for different message types."""
+        # Sensor data QoS (best effort, volatile)
+        self.sensor_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10,
+            durability=DurabilityPolicy.VOLATILE
+        )
+
+        # Navigation data QoS (reliable, transient local)
+        self.navigation_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL
+        )
+
+        # Mission critical QoS (reliable, persistent)
+        self.critical_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=50,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL
+        )
 
         # Create subscribers
         self._create_subscribers()
