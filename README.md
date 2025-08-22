@@ -3,13 +3,7 @@
 [![ROS 2 Humble](https://img.shields.io/badge/ROS2-Humble-blue)](https://docs.ros.org/en/humble/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg- **Storage**: 50GB free space (SSD recommended)
-- **Network**: Gigabit Ethernet for high-throughput communications
-- **Sensors**: Camera, IMU, GPS (professional-grade recommended)
-
----
-
-**Note**: This implementation provides production-ready capabilities suitable for autonomy engineering applications and integration requirements.s://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🛠️ Tech Stack
 
@@ -286,10 +280,6 @@ For technical support or deployment assistance:
 ---
 
 **Note**: This implementation provides production-ready capabilities suitable for autonomy engineering applications and integration requirements.
-
-### Deployment
-
-1. **Clone Repository**
 
    ```bash
    git clone https://github.com/hkevin01/python-slam.git
