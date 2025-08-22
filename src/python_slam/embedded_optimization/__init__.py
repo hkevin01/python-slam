@@ -15,7 +15,7 @@ from .edge_computing import EdgeComputingManager
 
 __all__ = [
     'ARMOptimizer',
-    'EmbeddedMemoryManager', 
+    'EmbeddedMemoryManager',
     'PowerManager',
     'RealTimeScheduler',
     'EmbeddedSLAMEngine',

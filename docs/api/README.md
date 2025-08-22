@@ -52,38 +52,38 @@ from python_slam_main import PythonSLAMSystem
 
 class PythonSLAMSystem:
     """Main Python-SLAM system controller."""
-    
+
     def __init__(self, config: Dict[str, Any]):
         """
         Initialize the SLAM system.
-        
+
         Args:
             config: System configuration dictionary
         """
-    
+
     def initialize(self) -> bool:
         """
         Initialize all system components.
-        
+
         Returns:
             bool: True if initialization successful
         """
-    
+
     def run(self, mode: str = "full") -> None:
         """
         Run the SLAM system.
-        
+
         Args:
             mode: Run mode ("full", "gui", "headless", "benchmark", "ros2")
         """
-    
+
     def stop(self) -> None:
         """Stop the SLAM system gracefully."""
-    
+
     def get_system_status(self) -> Dict[str, Any]:
         """
         Get current system status.
-        
+
         Returns:
             Dict containing system status information
         """
@@ -95,10 +95,10 @@ class PythonSLAMSystem:
 def load_config(config_path: str) -> Dict[str, Any]:
     """
     Load configuration from file.
-    
+
     Args:
         config_path: Path to configuration file
-        
+
     Returns:
         Dict: Configuration dictionary
     """
@@ -106,7 +106,7 @@ def load_config(config_path: str) -> Dict[str, Any]:
 def create_default_config() -> Dict[str, Any]:
     """
     Create default configuration.
-    
+
     Returns:
         Dict: Default configuration
     """
@@ -114,10 +114,10 @@ def create_default_config() -> Dict[str, Any]:
 def validate_config(config: Dict[str, Any]) -> Tuple[bool, List[str]]:
     """
     Validate configuration.
-    
+
     Args:
         config: Configuration to validate
-        
+
     Returns:
         Tuple of (is_valid, error_messages)
     """
@@ -197,22 +197,22 @@ from python_slam.benchmarking.benchmark_metrics import ProcessingMetrics
 
 class ProcessingMetrics:
     """Real-time processing metrics."""
-    
+
     def record_frame_time(self, frame_time: float) -> None:
         """Record frame processing time."""
-    
+
     def record_memory_usage(self, memory_mb: float) -> None:
         """Record memory usage."""
-    
+
     def record_cpu_usage(self, cpu_percent: float) -> None:
         """Record CPU usage."""
-    
+
     def get_current_fps(self) -> float:
         """Get current FPS."""
-    
+
     def get_average_fps(self) -> float:
         """Get average FPS."""
-    
+
     def get_peak_memory_usage(self) -> float:
         """Get peak memory usage."""
 ```
@@ -228,21 +228,21 @@ from python_slam.core.plugin_interface import SLAMPlugin
 
 class CustomSLAMPlugin(SLAMPlugin):
     """Custom SLAM plugin example."""
-    
+
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "custom_plugin"
         self.version = "1.0.0"
-    
+
     def initialize(self) -> bool:
         """Initialize plugin."""
         return True
-    
+
     def process_frame(self, frame_data: Any) -> Any:
         """Process a single frame."""
         # Custom processing logic
         return processed_data
-    
+
     def cleanup(self) -> None:
         """Cleanup plugin resources."""
         pass
@@ -270,15 +270,15 @@ from python_slam.core.events import EventManager, EventType
 
 class SLAMEventCallback:
     """SLAM event callback interface."""
-    
+
     def on_frame_processed(self, frame_data: Any) -> None:
         """Called when a frame is processed."""
         pass
-    
+
     def on_keyframe_added(self, keyframe: KeyFrame) -> None:
         """Called when a keyframe is added."""
         pass
-    
+
     def on_loop_closure(self, loop_data: Any) -> None:
         """Called when loop closure is detected."""
         pass

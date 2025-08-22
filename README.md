@@ -83,7 +83,7 @@ python python_slam_main.py --mode ros2
 
 ### Quick Links
 - [📖 Full Documentation](docs/README.md)
-- [🔧 Installation Guide](docs/installation.md) 
+- [🔧 Installation Guide](docs/installation.md)
 - [⚡ Quick Start Tutorial](docs/quick_start.md)
 - [🔌 API Reference](docs/api/README.md)
 - [🧪 Testing Guide](tests/README.md)

@@ -192,15 +192,15 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 class TestNewComponent(unittest.TestCase):
     """Test new component functionality."""
-    
+
     def setUp(self):
         """Set up test environment."""
         pass
-    
+
     def tearDown(self):
         """Clean up test environment."""
         pass
-    
+
     def test_component_functionality(self):
         """Test specific functionality."""
         try:

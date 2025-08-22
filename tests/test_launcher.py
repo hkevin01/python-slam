@@ -14,7 +14,7 @@ def main():
     """Main test launcher."""
     test_dir = Path(__file__).parent
     test_runner = test_dir / "run_tests.py"
-    
+
     print("Python-SLAM Test Launcher")
     print("=" * 50)
     print("1. Run all tests")
@@ -28,11 +28,11 @@ def main():
     print("9. Custom test selection")
     print("0. Exit")
     print("=" * 50)
-    
+
     while True:
         try:
             choice = input("Select test option (0-9): ").strip()
-            
+
             if choice == "0":
                 print("Exiting...")
                 break
@@ -63,10 +63,10 @@ def main():
             else:
                 print(f"Invalid choice: {choice}")
                 continue
-            
+
             print(f"\nRunning: {' '.join(cmd)}")
             print("-" * 50)
-            
+
             # Run the command
             try:
                 result = subprocess.run(cmd, cwd=test_dir.parent)
@@ -79,10 +79,10 @@ def main():
                 print("\n⚠ Test execution interrupted")
             except Exception as e:
                 print(f"✗ Error running tests: {e}")
-            
+
             print("\nPress Enter to continue...")
             input()
-            
+
         except KeyboardInterrupt:
             print("\nExiting...")
             break

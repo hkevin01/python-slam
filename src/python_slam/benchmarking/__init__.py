@@ -17,14 +17,14 @@ from .simulation import GazeboSimulator, SyntheticDataGenerator
 
 __all__ = [
     'TrajectoryMetrics',
-    'ProcessingMetrics', 
+    'ProcessingMetrics',
     'MapQualityMetrics',
     'MemoryMetrics',
     'BenchmarkRunner',
     'BenchmarkConfig',
     'DatasetLoader',
     'KITTILoader',
-    'TUMLoader', 
+    'TUMLoader',
     'EuRoCLoader',
     'ReportGenerator',
     'LaTeXReporter',

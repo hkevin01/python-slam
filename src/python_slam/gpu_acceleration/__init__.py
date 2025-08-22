@@ -21,7 +21,7 @@ __all__ = [
     'GPUDetector',
     'GPUBackend',
     'CudaAccelerator',
-    'ROCmAccelerator', 
+    'ROCmAccelerator',
     'MetalAccelerator',
     'GPUManager',
     'AcceleratedSLAMOperations'

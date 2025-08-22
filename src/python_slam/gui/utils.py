@@ -27,10 +27,10 @@ except ImportError:
 class MaterialDesign:
     """
     Material Design styling for Qt widgets.
-    
+
     Provides consistent styling across the application with Material Design principles.
     """
-    
+
     # Color palette
     COLORS = {
         'primary': '#2196F3',
@@ -48,7 +48,7 @@ class MaterialDesign:
         'danger': '#F44336',
         'info': '#2196F3'
     }
-    
+
     # Typography
     FONTS = {
         'body1': 'font-size: 14px; font-weight: 400;',
@@ -58,7 +58,7 @@ class MaterialDesign:
         'caption': 'font-size: 10px; font-weight: 400;',
         'button': 'font-size: 14px; font-weight: 500; text-transform: uppercase;'
     }
-    
+
     @classmethod
     def get_button_style(cls, variant: str = 'default') -> str:
         """Get button styling."""
@@ -83,7 +83,7 @@ class MaterialDesign:
                 color: {cls.COLORS['on_surface_variant']};
             }}
         """
-        
+
         if variant == 'primary':
             base_style = base_style.replace(
                 f"background-color: {cls.COLORS['surface_variant']};",
@@ -104,9 +104,9 @@ class MaterialDesign:
                 f"background-color: {cls.COLORS['surface_variant']};",
                 f"background-color: {cls.COLORS['warning']};"
             )
-        
+
         return base_style
-    
+
     @classmethod
     def get_groupbox_style(cls) -> str:
         """Get group box styling."""
@@ -128,7 +128,7 @@ class MaterialDesign:
                 background-color: transparent;
             }}
         """
-    
+
     @classmethod
     def get_panel_style(cls) -> str:
         """Get panel styling."""
@@ -139,7 +139,7 @@ class MaterialDesign:
                 border-radius: 8px;
             }}
         """
-    
+
     @classmethod
     def get_combo_style(cls) -> str:
         """Get combo box styling."""
@@ -180,7 +180,7 @@ class MaterialDesign:
                 selection-background-color: {cls.COLORS['primary']};
             }}
         """
-    
+
     @classmethod
     def get_checkbox_style(cls) -> str:
         """Get checkbox styling."""
@@ -210,7 +210,7 @@ class MaterialDesign:
                 border-color: {cls.COLORS['primary']};
             }}
         """
-    
+
     @classmethod
     def get_label_style(cls) -> str:
         """Get label styling."""
@@ -221,19 +221,19 @@ class MaterialDesign:
                 background: transparent;
             }}
         """
-    
+
     @classmethod
     def get_value_label_style(cls, variant: str = 'default') -> str:
         """Get value label styling."""
         color = cls.COLORS['on_surface']
-        
+
         if variant == 'success':
             color = cls.COLORS['success']
         elif variant == 'danger':
             color = cls.COLORS['danger']
         elif variant == 'warning':
             color = cls.COLORS['warning']
-        
+
         return f"""
             QLabel {{
                 {cls.FONTS['subtitle2']}
@@ -242,7 +242,7 @@ class MaterialDesign:
                 font-weight: bold;
             }}
         """
-    
+
     @classmethod
     def get_small_label_style(cls) -> str:
         """Get small label styling."""
@@ -253,7 +253,7 @@ class MaterialDesign:
                 background: transparent;
             }}
         """
-    
+
     @classmethod
     def get_textedit_style(cls) -> str:
         """Get text edit styling."""
@@ -271,7 +271,7 @@ class MaterialDesign:
                 border-width: 2px;
             }}
         """
-    
+
     @classmethod
     def get_lineedit_style(cls) -> str:
         """Get line edit styling."""
@@ -293,7 +293,7 @@ class MaterialDesign:
                 border-width: 2px;
             }}
         """
-    
+
     @classmethod
     def get_progressbar_style(cls) -> str:
         """Get progress bar styling."""
@@ -311,7 +311,7 @@ class MaterialDesign:
                 border-radius: 3px;
             }}
         """
-    
+
     @classmethod
     def get_tab_style(cls) -> str:
         """Get tab widget styling."""
@@ -340,7 +340,7 @@ class MaterialDesign:
                 color: {cls.COLORS['on_surface']};
             }}
         """
-    
+
     @classmethod
     def get_slider_style(cls) -> str:
         """Get slider styling."""
@@ -372,10 +372,10 @@ class MaterialDesign:
 class ThemeManager:
     """
     Theme management for the application.
-    
+
     Handles theme switching and persistence.
     """
-    
+
     def __init__(self):
         self.current_theme = 'dark'
         self.themes = {
@@ -394,7 +394,7 @@ class ThemeManager:
                 'on_surface': '#212121'
             }
         }
-    
+
     def set_theme(self, theme_name: str):
         """Set the current theme."""
         if theme_name in self.themes:
@@ -404,21 +404,21 @@ class ThemeManager:
             for key, value in theme_colors.items():
                 if key in MaterialDesign.COLORS:
                     MaterialDesign.COLORS[key] = value
-    
+
     def get_current_theme(self) -> str:
         """Get the current theme name."""
         return self.current_theme
-    
+
     def apply_theme(self, widget: QWidget, theme_name: Optional[str] = None):
         """Apply theme to a widget."""
         if theme_name:
             self.set_theme(theme_name)
-        
+
         # Apply global stylesheet
         app_stylesheet = self.get_application_stylesheet()
         if hasattr(widget, 'setStyleSheet'):
             widget.setStyleSheet(app_stylesheet)
-    
+
     def get_application_stylesheet(self) -> str:
         """Get the global application stylesheet."""
         return f"""
@@ -500,7 +500,7 @@ class ThemeManager:
                 background: none;
             }}
         """
-    
+
     def save_theme_preferences(self, file_path: str):
         """Save theme preferences to file."""
         try:
@@ -512,7 +512,7 @@ class ThemeManager:
                 json.dump(preferences, f, indent=2)
         except Exception as e:
             print(f"Error saving theme preferences: {e}")
-    
+
     def load_theme_preferences(self, file_path: str):
         """Load theme preferences from file."""
         try:
@@ -528,10 +528,10 @@ class ThemeManager:
 class IconProvider:
     """
     Icon provider for the application.
-    
+
     Provides consistent icons throughout the application.
     """
-    
+
     @staticmethod
     def get_icon(name: str, color: str = '#FFFFFF') -> QIcon:
         """Get an icon by name."""
@@ -540,7 +540,7 @@ class IconProvider:
         pixmap = QPixmap(16, 16)
         pixmap.fill(QColor(color))
         return QIcon(pixmap)
-    
+
     @staticmethod
     def get_material_icon(name: str, size: int = 24, color: str = '#FFFFFF') -> QIcon:
         """Get a Material Design icon."""
@@ -555,32 +555,32 @@ class AnimationHelper:
     """
     Helper for creating smooth animations.
     """
-    
+
     @staticmethod
     def fade_widget(widget: QWidget, fade_in: bool = True, duration: int = 300):
         """Fade a widget in or out."""
         effect = QGraphicsOpacityEffect()
         widget.setGraphicsEffect(effect)
-        
+
         animation = QPropertyAnimation(effect, b"opacity")
         animation.setDuration(duration)
-        
+
         if fade_in:
             animation.setStartValue(0.0)
             animation.setEndValue(1.0)
         else:
             animation.setStartValue(1.0)
             animation.setEndValue(0.0)
-        
+
         animation.start()
         return animation
-    
+
     @staticmethod
     def slide_widget(widget: QWidget, direction: str = 'left', duration: int = 300):
         """Slide a widget in from a direction."""
         animation = QPropertyAnimation(widget, b"pos")
         animation.setDuration(duration)
-        
+
         start_pos = widget.pos()
         if direction == 'left':
             end_pos = QPoint(start_pos.x() - widget.width(), start_pos.y())
@@ -590,7 +590,7 @@ class AnimationHelper:
             end_pos = QPoint(start_pos.x(), start_pos.y() - widget.height())
         else:  # down
             end_pos = QPoint(start_pos.x(), start_pos.y() + widget.height())
-        
+
         animation.setStartValue(end_pos)
         animation.setEndValue(start_pos)
         animation.start()
@@ -601,17 +601,17 @@ class GeometryHelper:
     """
     Helper for geometry calculations and transformations.
     """
-    
+
     @staticmethod
-    def screen_to_world(screen_pos: Tuple[int, int], camera_matrix: 'np.ndarray', 
+    def screen_to_world(screen_pos: Tuple[int, int], camera_matrix: 'np.ndarray',
                        depth: float) -> Tuple[float, float, float]:
         """Convert screen coordinates to world coordinates."""
         # Implementation for 3D coordinate transformation
         # This would use camera intrinsics and depth information
         pass
-    
+
     @staticmethod
-    def world_to_screen(world_pos: Tuple[float, float, float], 
+    def world_to_screen(world_pos: Tuple[float, float, float],
                        camera_matrix: 'np.ndarray') -> Tuple[int, int]:
         """Convert world coordinates to screen coordinates."""
         # Implementation for 3D to 2D projection
