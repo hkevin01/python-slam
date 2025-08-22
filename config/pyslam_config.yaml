@@ -1,0 +1,68 @@
+# pySLAM Configuration for Python SLAM Project
+# This file configures the integration between python-slam and pySLAM framework
+
+# Main system settings
+pyslam_path: ""  # Path to pySLAM installation (auto-detected if empty)
+use_pyslam: true  # Enable pySLAM integration
+fallback_to_opencv: true  # Fallback to OpenCV if pySLAM fails
+
+# Feature extraction configuration
+features:
+  detector: "ORB"  # Feature detector: ORB, SIFT, SURF, SuperPoint, D2Net, etc.
+  descriptor: "ORB"  # Feature descriptor: ORB, SIFT, SURF, SuperPoint, HardNet, etc.
+  matcher: "BF"  # Feature matcher: BF, FLANN, LightGlue, LoFTR, etc.
+  max_features: 1000  # Maximum number of features to extract
+  use_adaptive_threshold: true  # Use adaptive thresholds for feature detection
+
+  # Advanced feature parameters
+  orb_scale_factor: 1.2
+  orb_n_levels: 8
+  sift_n_features: 1000
+  surf_hessian_threshold: 400.0
+
+# Loop closure detection configuration
+loop_closure:
+  method: "DBoW2"  # Loop closure method: DBoW2, DBoW3, NetVLAD, iBoW, CosPlace, etc.
+  vocabulary_path: ""  # Path to vocabulary file (auto-downloaded if empty)
+  similarity_threshold: 0.7  # Similarity threshold for loop detection
+  min_matches: 50  # Minimum number of matches for loop detection
+  use_geometric_verification: true  # Use geometric verification for loop closure
+
+# Depth estimation configuration
+depth:
+  enabled: false  # Enable depth estimation
+  method: "DepthAnything"  # Depth method: DepthAnything, DepthPro, RAFT-Stereo, etc.
+  use_in_frontend: false  # Use depth estimation in frontend
+  use_in_backend: true  # Use depth estimation in backend
+  depth_scale_factor: 1000.0  # Scale factor for depth values
+
+# Semantic mapping configuration
+semantic:
+  enabled: false  # Enable semantic mapping
+  method: "DeepLabv3"  # Semantic method: DeepLabv3, Segformer, CLIP
+  num_classes: 21  # Number of semantic classes
+  confidence_threshold: 0.5  # Confidence threshold for semantic predictions
+
+# Volumetric reconstruction configuration
+volumetric:
+  enabled: false  # Enable volumetric reconstruction
+  method: "TSDF"  # Volumetric method: TSDF, GAUSSIAN_SPLATTING
+  voxel_size: 0.05  # Voxel size for reconstruction
+  truncation_distance: 0.3  # Truncation distance for TSDF
+  extract_mesh: true  # Extract mesh from volumetric reconstruction
+
+# Performance and debugging
+logging:
+  level: "INFO"  # Logging level: DEBUG, INFO, WARNING, ERROR
+  log_pyslam_performance: false  # Log pySLAM performance metrics
+
+# Dataset-specific settings
+dataset:
+  camera_model: "pinhole"  # Camera model for pySLAM
+  use_ground_truth: false  # Use ground truth for evaluation
+
+# Integration settings
+integration:
+  ros2_compatibility: true  # Ensure ROS2 compatibility
+  docker_support: true  # Support Docker environments
+  gpu_acceleration: true  # Use GPU acceleration when available

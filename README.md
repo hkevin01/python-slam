@@ -21,6 +21,35 @@
 
 A comprehensive **Simultaneous Localization and Mapping (SLAM)** implementation in Python with advanced ROS 2 integration, PX4 flight control, and containerized deployment capabilities. This project provides a complete SLAM framework with advanced computer vision techniques and integration capabilities for autonomous navigation applications.
 
+## 🤖 Why ROS2 + SLAM: Technology Integration Strategy
+
+### ROS2 as Middleware Foundation
+
+This project uses **ROS2 Humble** as the core middleware framework while implementing **SLAM algorithms** within the ROS2 ecosystem. This is not an "either/or" choice but a complementary integration strategy:
+
+**ROS2 Provides:**
+- **System Architecture**: Distributed computing framework for robotics applications
+- **Communication Infrastructure**: DDS-based messaging with configurable Quality of Service
+- **Sensor Integration**: Standardized interfaces for cameras, IMU, LiDAR, and other sensors
+- **Real-time Capabilities**: Deterministic communication patterns for time-critical operations
+- **Ecosystem Integration**: Compatible with navigation, planning, and control frameworks
+
+**SLAM Algorithms Provide:**
+- **Localization**: Real-time pose estimation in unknown environments
+- **Mapping**: Environmental representation and spatial understanding
+- **Loop Closure**: Place recognition and trajectory optimization
+- **Sensor Fusion**: Multi-modal data integration for robust navigation
+
+### Integration Benefits
+
+- **Modular Design**: SLAM components can be upgraded or swapped independently
+- **Standardized Interfaces**: Consistent sensor_msgs and geometry_msgs across the system
+- **Distributed Processing**: SLAM computation can run on different hardware than control systems
+- **Professional Tools**: Built-in visualization, logging, debugging, and simulation capabilities
+- **Community Ecosystem**: Access to thousands of ROS2 packages and algorithms
+
+**Learn More**: See [docs/ros2_vs_slam_comparison.md](docs/ros2_vs_slam_comparison.md) for detailed technical comparison and research-based algorithm selection rationale.
+
 ## 🏛️ Project Overview & Technology Rationale
 
 ### Why This Project Was Built
@@ -427,6 +456,42 @@ docker-compose up slam
    ```bash
    docker-compose --profile visualization up slam-viz
    ```
+
+### Optional: pySLAM Integration
+
+To enable advanced SLAM features with pySLAM integration:
+
+1. **Install pySLAM** (requires separate installation)
+
+   ```bash
+   # Clone pySLAM repository
+   git clone --recursive https://github.com/luigifreda/pyslam.git
+   cd pyslam
+
+   # Follow pySLAM installation instructions
+   ./install_all.sh
+
+   # Activate pySLAM environment
+   . pyenv-activate.sh
+   ```
+
+2. **Test Integration**
+
+   ```bash
+   # Run integration test
+   python scripts/test_pyslam_integration.py
+
+   # Check available features
+   python -c "from src.python_slam.pyslam_integration import pySLAMWrapper; print(pySLAMWrapper().get_supported_features())"
+   ```
+
+3. **Configure pySLAM**
+
+   Edit `config/pyslam_config.yaml` to customize:
+   - Feature detectors (ORB, SIFT, SuperPoint, etc.)
+   - Loop closure methods (DBoW2, NetVLAD, etc.)
+   - Depth estimation models
+   - Semantic mapping options
 
 ### Development Environment
 

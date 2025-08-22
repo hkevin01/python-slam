@@ -33,6 +33,16 @@ click==8.1.6
 # dbow2-python==0.1.0  # Bag of words for loop closure
 # open3d==0.17.0  # 3D point cloud processing
 
+# pySLAM Integration - Advanced SLAM Framework
+# Note: pySLAM has complex dependencies and should be installed separately
+# See: https://github.com/luigifreda/pyslam for installation instructions
+# pySLAM provides:
+# - Advanced feature detectors (SuperPoint, SIFT, ORB, etc.)
+# - Loop closure with multiple methods (DBoW2, DBoW3, NetVLAD, etc.)
+# - Volumetric reconstruction (TSDF, Gaussian Splatting)
+# - Depth prediction models (DepthPro, DepthAnything, etc.)
+# - Semantic mapping capabilities
+
 # Development and Jupyter
 ipython==8.14.0
 jupyter==1.0.0

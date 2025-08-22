@@ -35,6 +35,7 @@ setup(
         'numpy',
         'scipy',
         'matplotlib',
+        'PyYAML',
         # Defense-oriented dependencies
         'mavsdk',
         'zmq',
@@ -42,14 +43,30 @@ setup(
         'PyQt5',
         'pyproj',
     ],
+    extras_require={
+        'algorithms': [
+            'orbslam3-python',
+            'rtabmap-python',
+            'openvslam',
+        ],
+        'dev': [
+            'pytest',
+            'black',
+            'flake8',
+            'mypy',
+        ],
+    },
     zip_safe=True,
     maintainer='Python SLAM Team',
     maintainer_email='developer@python-slam.org',
-    description='Advanced Python SLAM package for aerial drone competitions',
+    description='Multi-Algorithm SLAM Framework for ROS2 with Runtime Switching',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            # Multi-algorithm SLAM framework
+            'multi_slam_node = python_slam.nodes.multi_slam_node:main',
+            # Original SLAM nodes
             'slam_node = python_slam.slam_node:main',
             'feature_extraction_node = python_slam.feature_extraction_node:main',
             'pose_estimation_node = python_slam.pose_estimation_node:main',
