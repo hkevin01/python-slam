@@ -1,9 +1,50 @@
 # Python SLAM Project
 
 [![ROS 2 Humble](https://img.shields.io/badge/ROS2-Humble-blue)](https://docs.ros.org/en/humble/)
-[![Python 3.10+](https://img.shields.io/badge- **Flexibility**: Easy integration of new components
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 💡 Solving Real-World SLAM Challenges
+## �️ Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Core Language** | Python 3.10+ |
+| **Robotics Framework** | ROS 2 Humble Hawksbill |
+| **Computer Vision** | OpenCV, NumPy, SciPy |
+| **Flight Control** | PX4 Autopilot, MAVSDK |
+| **GUI Framework** | PyQt5, PyOpenGL |
+| **Messaging** | ZeroMQ (ZMQ), MAVLink |
+| **Containerization** | Docker, Docker Compose |
+| **Visualization** | PyQtGraph, Matplotlib |
+| **Development** | VS Code, pytest, black |
+
+A comprehensive **Simultaneous Localization and Mapping (SLAM)** implementation in Python with advanced ROS 2 integration, PX4 flight control, and containerized deployment capabilities. This project provides a complete SLAM framework with advanced computer vision techniques and integration capabilities for autonomous navigation applications.
+
+## 🏛️ Project Overview & Technology Rationale
+
+### Why This Project Was Built
+
+This Python SLAM implementation was designed to address the growing need for robust, scalable, and production-ready SLAM systems that can seamlessly integrate with modern robotics ecosystems. Traditional SLAM implementations often struggle with real-world deployment challenges, system integration complexity, and scalability across different hardware platforms.
+
+**Key Problems Solved:**
+
+- **Integration Complexity**: Unified interface between computer vision, robotics middleware, and flight control systems
+- **Deployment Challenges**: Containerized architecture enabling consistent deployment across environments
+- **Performance Bottlenecks**: Multi-container separation allowing backend processing to run independently of visualization
+- **Development Friction**: Comprehensive development environment with professional tooling
+- **Communication Reliability**: Robust messaging architecture supporting real-time operations
+
+### Architecture Philosophy
+
+The system follows a **microservices architecture** with clear separation of concerns:
+
+- **Backend Services**: Handle compute-intensive SLAM processing
+- **Frontend Services**: Provide rich visualization and user interaction
+- **Communication Layer**: Enable reliable, low-latency data exchange
+- **Configuration Management**: Standardized networking and service discovery
+
+## �💡 Solving Real-World SLAM Challenges
 
 ### Problem: Traditional SLAM Performance Bottlenecks
 **Solution: Multi-Container Architecture + CycloneDX**
