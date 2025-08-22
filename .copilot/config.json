@@ -1,0 +1,11 @@
+{
+  "behavior": {
+    "enableSuggestions": true,
+    "enableCompletions": true,
+    "suggestionMode": "aggressive"
+  },
+  "preferences": {
+    "pythonStyle": "pep8",
+    "maxLineLength": 88
+  }
+}

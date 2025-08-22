@@ -1,0 +1,65 @@
+# SLAM Configuration Parameters
+slam_node:
+  ros__parameters:
+    # Camera parameters
+    camera_topic: "/camera/image_raw"
+    camera_info_topic: "/camera/camera_info"
+    depth_topic: "/camera/depth/image_raw"
+
+    # Frames
+    map_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+    camera_frame: "camera_link"
+
+    # SLAM parameters
+    loop_closure_enabled: true
+    mapping_enabled: true
+    localization_enabled: true
+
+    # Feature extraction parameters
+    max_features: 1000
+    quality_level: 0.01
+    min_distance: 10
+    corner_threshold: 0.04
+
+    # Pose estimation parameters
+    ransac_threshold: 1.0
+    confidence: 0.99
+    max_iterations: 1000
+    min_inliers: 50
+
+    # Mapping parameters
+    map_resolution: 0.05
+    map_size: 1000
+    update_frequency: 10.0
+    occupancy_threshold: 0.65
+    free_threshold: 0.25
+
+    # Localization parameters
+    particle_count: 500
+    initial_pose_variance: 1.0
+    motion_noise_translation: 0.1
+    motion_noise_rotation: 0.05
+
+    # Loop closure parameters
+    similarity_threshold: 0.7
+    min_loop_distance: 10.0
+    loop_closure_frequency: 2.0
+
+    # Flight integration parameters
+    altitude_control: true
+    max_velocity: 2.0
+    safety_distance: 1.0
+    emergency_landing_enabled: true
+
+    # Visualization parameters
+    publish_tf: true
+    publish_point_cloud: true
+    publish_trajectory: true
+
+    # Debug parameters
+    debug_mode: false
+    verbose_logging: false
+    save_trajectory: true
+    trajectory_file: "/tmp/slam_trajectory.txt"

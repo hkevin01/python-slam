@@ -1,4 +1,46 @@
-numpy
-scipy
-matplotlib
-pytest
+# Core Computer Vision and Numerical Computing
+opencv-python==4.8.1.78
+numpy==1.24.3
+scipy==1.11.2
+matplotlib==3.7.2
+
+# NOTE: ROS 2 Dependencies are installed via apt in Dockerfile
+# - rclpy, sensor_msgs, geometry_msgs, nav_msgs, tf2_ros, etc.
+# - These are available as system packages in the ROS Docker image
+
+# SLAM and Robotics Libraries
+transforms3d==0.4.1
+scikit-image==0.21.0
+scikit-learn==1.3.0
+
+# Testing and Development
+pytest==7.4.0
+pytest-cov==4.1.0
+black==23.7.0
+pylint==2.17.5
+flake8==6.0.0
+mypy==1.5.1
+isort==5.12.0
+
+# Data Processing and Utilities
+pyyaml==6.0.1
+tqdm==4.65.0
+click==8.1.6
+
+# Optional: Advanced Features
+# Uncomment for advanced SLAM features
+# g2o-python==0.0.1  # Graph optimization
+# dbow2-python==0.1.0  # Bag of words for loop closure
+# open3d==0.17.0  # 3D point cloud processing
+
+# Development and Jupyter
+ipython==8.14.0
+jupyter==1.0.0
+notebook==7.0.2
+
+# Pre-commit hooks for code quality
+pre-commit==3.3.3
+
+# Documentation
+sphinx==7.1.2
+sphinx-rtd-theme==1.3.0

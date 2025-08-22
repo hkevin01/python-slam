@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # Development environment with full tooling
+  slam-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: python-slam-dev
+    volumes:
+      - .:/workspace/src/python_slam
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - PYTHONPATH=/workspace/src/python_slam/src
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /workspace/src/python_slam
+    command: bash
+
+  # Production environment for deployment
+  slam-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: python-slam-prod
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    network_mode: host
+    restart: unless-stopped
+
+  # Runtime environment for minimal deployment
+  slam-runtime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: python-slam-runtime
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    network_mode: host
+    restart: unless-stopped
+
+  # Jupyter notebook server for interactive development
+  slam-jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: python-slam-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/workspace/src/python_slam
+    environment:
+      - PYTHONPATH=/workspace/src/python_slam/src
+    working_dir: /workspace/src/python_slam
+    command: >
+      bash -c "
+        source /opt/ros/humble/setup.bash &&
+        jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --notebook-dir=/workspace/src/python_slam
+      "
+
+  # Testing environment
+  slam-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: python-slam-test
+    volumes:
+      - .:/workspace/src/python_slam
+    environment:
+      - PYTHONPATH=/workspace/src/python_slam/src
+    working_dir: /workspace/src/python_slam
+    command: >
+      bash -c "
+        source /opt/ros/humble/setup.bash &&
+        python -m pytest tests/ -v --cov=src --cov-report=html --cov-report=term
+      "
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  ros_logs:
+    driver: local

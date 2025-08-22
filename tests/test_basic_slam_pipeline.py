@@ -1,6 +1,10 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 import numpy as np
 
-from src.basic_slam_pipeline import BasicSLAMPipeline
+from basic_slam_pipeline import BasicSLAMPipeline
 
 # Camera intrinsics (example values)
 fx, fy, cx, cy = 700, 700, 320, 240
