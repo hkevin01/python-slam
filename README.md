@@ -419,7 +419,7 @@ sudo apt update
 sudo apt install python3-pip python3-venv git cmake build-essential
 
 # Install Python dependencies
-pip install -r requirements.txt
+pip install -r config/build/requirements.txt
 
 # Install optional GPU dependencies
 # For CUDA (NVIDIA)
@@ -463,19 +463,19 @@ python tests/run_tests.py --quick
 
 ```bash
 # Full GUI application with all features
-python python_slam_main.py --mode full --gui
+python src/python_slam_main.py --mode full --gui
 
 # Headless processing for servers/cloud
-python python_slam_main.py --mode headless --dataset /path/to/data
+python src/python_slam_main.py --mode headless --dataset /path/to/data
 
 # Benchmarking mode for evaluation
-python python_slam_main.py --mode benchmark --config config/benchmark.yaml
+python src/python_slam_main.py --mode benchmark --config config/benchmark.yaml
 
 # ROS2 integration for robotics systems
-python python_slam_main.py --mode ros2 --node-name slam_processor
+python src/python_slam_main.py --mode ros2 --node-name slam_processor
 
 # Development mode with debug output
-python python_slam_main.py --mode development --log-level debug
+python src/python_slam_main.py --mode development --log-level debug
 ```
 
 ## 🏗️ System Architecture

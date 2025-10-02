@@ -312,7 +312,7 @@ Type=Application
 Name=Python-SLAM
 Comment=Comprehensive SLAM System with GUI
 Icon=$PYTHON_SLAM_DIR/assets/icon.png
-Exec=$PYTHON_SLAM_DIR/python_slam_main.py --mode gui
+Exec=$PYTHON_SLAM_DIR/src/python_slam_main.py --mode gui
 Terminal=false
 Categories=Science;Education;
 EOF
@@ -323,21 +323,21 @@ EOF
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/activate_env.sh"
-python "$SCRIPT_DIR/python_slam_main.py" --mode gui "$@"
+python "$SCRIPT_DIR/src/python_slam_main.py" --mode gui "$@"
 EOF
 
     cat > "$PYTHON_SLAM_DIR/run_benchmark.sh" << 'EOF'
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/activate_env.sh"
-python "$SCRIPT_DIR/python_slam_main.py" --mode benchmark "$@"
+python "$SCRIPT_DIR/src/python_slam_main.py" --mode benchmark "$@"
 EOF
 
     cat > "$PYTHON_SLAM_DIR/run_headless.sh" << 'EOF'
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/activate_env.sh"
-python "$SCRIPT_DIR/python_slam_main.py" --mode headless "$@"
+python "$SCRIPT_DIR/src/python_slam_main.py" --mode headless "$@"
 EOF
 
     chmod +x "$PYTHON_SLAM_DIR/run_"*.sh

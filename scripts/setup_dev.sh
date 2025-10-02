@@ -21,7 +21,7 @@ pip install --upgrade pip
 
 # Install dependencies
 echo "Installing Python dependencies..."
-pip install -r requirements.txt
+pip install -r config/build/requirements.txt
 
 # Install package in development mode
 echo "Installing package in development mode..."
@@ -32,9 +32,9 @@ echo "Setting up pre-commit hooks..."
 pre-commit install
 
 # Create .env file if it doesn't exist
-if [ ! -f ".env" ]; then
-    echo "Creating .env file..."
-    cat > .env << EOF
+if [ ! -f "config/env/.env" ]; then
+    echo "Creating config/env/.env file..."
+    cat > config/env/.env << EOF
 # Python SLAM Environment Variables
 PYTHONPATH=\${PWD}/src
 ROS_DOMAIN_ID=42
@@ -60,7 +60,7 @@ CAMERA_P1=0.0
 CAMERA_P2=0.0
 CAMERA_K3=0.0
 EOF
-    echo "Created .env file with default values"
+    echo "Created config/env/.env file with default values"
 fi
 
 echo "Development environment setup complete!"

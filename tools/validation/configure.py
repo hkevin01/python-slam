@@ -576,7 +576,7 @@ def main():
         if save_configuration(config, str(config_path)):
             colored_print("\nConfiguration wizard completed successfully!", Colors.GREEN)
             colored_print(f"To use this configuration, run:", Colors.BLUE)
-            colored_print(f"python python_slam_main.py --config {config_path}", Colors.BOLD)
+            colored_print(f"python src/python_slam_main.py --config {config_path}", Colors.BOLD)
         else:
             colored_print("\nConfiguration wizard completed with errors.", Colors.RED)
     else:

@@ -22,10 +22,10 @@ if ! command -v docker-compose &> /dev/null; then
     exit 1
 fi
 
-# Check if .env.multi exists
-if [ ! -f .env.multi ]; then
-    echo -e "${YELLOW}Warning: .env.multi not found, creating from template${NC}"
-    cp .env.multi.template .env.multi 2>/dev/null || echo "ROS_DOMAIN_ID=0" > .env.multi
+# Check if config/env/.env.multi exists
+if [ ! -f config/env/.env.multi ]; then
+    echo -e "${YELLOW}Warning: config/env/.env.multi not found, creating from template${NC}"
+    cp config/env/.env.multi.template config/env/.env.multi 2>/dev/null || echo "ROS_DOMAIN_ID=0" > config/env/.env.multi
 fi
 
 # Setup X11 forwarding for GUI
@@ -87,7 +87,7 @@ done
 
 # Docker compose file
 COMPOSE_FILE="docker-compose.multi.yml"
-ENV_FILE=".env.multi"
+ENV_FILE="config/env/.env.multi"
 
 # Build if needed
 if [ "$REBUILD" = true ] || [ "$COMMAND" = "build" ]; then

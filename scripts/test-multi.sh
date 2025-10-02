@@ -10,9 +10,9 @@ if [ ! -f "docker-compose.multi.yml" ]; then
 fi
 
 # Check if environment file exists
-if [ ! -f ".env.multi" ]; then
-    echo "WARNING: .env.multi not found, creating default"
-    echo "ROS_DOMAIN_ID=0" > .env.multi
+if [ ! -f "config/env/.env.multi" ]; then
+    echo "WARNING: config/env/.env.multi not found, creating default"
+    echo "ROS_DOMAIN_ID=0" > config/env/.env.multi
 fi
 
 # Build the images
