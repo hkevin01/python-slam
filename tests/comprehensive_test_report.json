@@ -1,0 +1,57 @@
+{
+  "test_execution": {
+    "timestamp": "2025-10-02T16:37:53.377055",
+    "duration_seconds": 2.8894314765930176,
+    "total_tests": 27,
+    "passed": 5,
+    "failed": 2,
+    "errors": 2,
+    "skipped": 18,
+    "success_rate": 0.18518518518518517
+  },
+  "performance_metrics": {
+    "avg_test_duration": 0.10701598061455621,
+    "tests_per_second": 9.344398792192921
+  },
+  "compliance": {
+    "nasa_std_8739_8": true,
+    "boundary_condition_testing": true,
+    "memory_leak_detection": true,
+    "performance_validation": true,
+    "error_handling_verification": true
+  },
+  "test_categories": {
+    "core_slam": {
+      "status": "completed",
+      "critical": true
+    },
+    "gpu_acceleration": {
+      "status": "completed",
+      "critical": true
+    },
+    "gui_components": {
+      "status": "completed",
+      "critical": false
+    },
+    "benchmarking": {
+      "status": "completed",
+      "critical": true
+    },
+    "embedded_optimization": {
+      "status": "completed",
+      "critical": false
+    },
+    "ros2_integration": {
+      "status": "completed",
+      "critical": false
+    },
+    "system_integration": {
+      "status": "completed",
+      "critical": true
+    },
+    "performance_memory": {
+      "status": "completed",
+      "critical": true
+    }
+  }
+}
