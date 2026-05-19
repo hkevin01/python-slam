@@ -32,16 +32,16 @@ Traditional SLAM implementations suffer from critical limitations that prevent r
 
 ### 🌟 Key Differentiators
 
-| Feature | Traditional SLAM | Python-SLAM |
+| <sub>Feature</sub> | <sub>Traditional SLAM</sub> | <sub>Python-SLAM</sub> |
 |---------|------------------|--------------|
-| **Documentation Standards** | Research-grade | NASA STD-8739.8 compliant |
-| **GPU Acceleration** | Limited/None | Multi-backend (CUDA/ROCm/Metal) |
-| **Production Readiness** | Proof-of-concept | Enterprise deployment-ready |
-| **Quality Assurance** | Manual testing | Automated CI/CD with formal verification |
-| **Platform Support** | Linux-only | Cross-platform (Linux/macOS/Windows) |
-| **Integration** | Manual setup | ROS2 Nav2 native integration |
-| **Performance Monitoring** | Basic logging | Comprehensive benchmarking suite |
-| **Deployment** | Source compilation | Docker containerization |
+| <sub>**Documentation Standards**</sub> | <sub>Research-grade</sub> | <sub>NASA STD-8739.8 compliant</sub> |
+| <sub>**GPU Acceleration**</sub> | <sub>Limited/None</sub> | <sub>Multi-backend (CUDA/ROCm/Metal)</sub> |
+| <sub>**Production Readiness**</sub> | <sub>Proof-of-concept</sub> | <sub>Enterprise deployment-ready</sub> |
+| <sub>**Quality Assurance**</sub> | <sub>Manual testing</sub> | <sub>Automated CI/CD with formal verification</sub> |
+| <sub>**Platform Support**</sub> | <sub>Linux-only</sub> | <sub>Cross-platform (Linux/macOS/Windows)</sub> |
+| <sub>**Integration**</sub> | <sub>Manual setup</sub> | <sub>ROS2 Nav2 native integration</sub> |
+| <sub>**Performance Monitoring**</sub> | <sub>Basic logging</sub> | <sub>Comprehensive benchmarking suite</sub> |
+| <sub>**Deployment**</sub> | <sub>Source compilation</sub> | <sub>Docker containerization</sub> |
 
 ### 💼 Market Applications
 
@@ -350,49 +350,49 @@ graph TB
 
 ### Core Technology Selection Matrix
 
-| Component | Technology Choice | Alternative Considered | Selection Rationale |
+| <sub>Component</sub> | <sub>Technology Choice</sub> | <sub>Alternative Considered</sub> | <sub>Selection Rationale</sub> |
 |-----------|------------------|----------------------|-------------------|
-| **GUI Framework** | PyQt6/PySide6 | Tkinter, Kivy, Web-based | Professional desktop apps, OpenGL integration, cross-platform |
-| **3D Graphics** | OpenGL 4.0+ | Vulkan, DirectX | Mature, cross-platform, excellent Python bindings |
-| **GPU Compute** | CUDA/ROCm/Metal | OpenCL only | Platform-specific optimization, maximum performance |
-| **Robotics MW** | ROS2 Humble | ROS1, custom middleware | Modern architecture, DDS communication, industry adoption |
-| **Computer Vision** | OpenCV + Custom | PCL, Open3D | Proven algorithms, GPU acceleration, comprehensive API |
-| **Benchmarking** | Custom Framework | Existing tools | SLAM-specific metrics, automated reporting, extensibility |
-| **Deployment** | Docker Multi-stage | VM, native install | Consistent environments, CI/CD integration, scalability |
-| **Configuration** | YAML + Validation | JSON, TOML | Human-readable, schema validation, professional tooling |
+| <sub>**GUI Framework**</sub> | <sub>PyQt6/PySide6</sub> | <sub>Tkinter, Kivy, Web-based</sub> | <sub>Professional desktop apps, OpenGL integration, cross-platform</sub> |
+| <sub>**3D Graphics**</sub> | <sub>OpenGL 4.0+</sub> | <sub>Vulkan, DirectX</sub> | <sub>Mature, cross-platform, excellent Python bindings</sub> |
+| <sub>**GPU Compute**</sub> | <sub>CUDA/ROCm/Metal</sub> | <sub>OpenCL only</sub> | <sub>Platform-specific optimization, maximum performance</sub> |
+| <sub>**Robotics MW**</sub> | <sub>ROS2 Humble</sub> | <sub>ROS1, custom middleware</sub> | <sub>Modern architecture, DDS communication, industry adoption</sub> |
+| <sub>**Computer Vision**</sub> | <sub>OpenCV + Custom</sub> | <sub>PCL, Open3D</sub> | <sub>Proven algorithms, GPU acceleration, comprehensive API</sub> |
+| <sub>**Benchmarking**</sub> | <sub>Custom Framework</sub> | <sub>Existing tools</sub> | <sub>SLAM-specific metrics, automated reporting, extensibility</sub> |
+| <sub>**Deployment**</sub> | <sub>Docker Multi-stage</sub> | <sub>VM, native install</sub> | <sub>Consistent environments, CI/CD integration, scalability</sub> |
+| <sub>**Configuration**</sub> | <sub>YAML + Validation</sub> | <sub>JSON, TOML</sub> | <sub>Human-readable, schema validation, professional tooling</sub> |
 
 ### Performance Comparison
 
-| Operation | CPU Only | CUDA GPU | ROCm GPU | Metal GPU | Performance Gain |
+| <sub>Operation</sub> | <sub>CPU Only</sub> | <sub>CUDA GPU</sub> | <sub>ROCm GPU</sub> | <sub>Metal GPU</sub> | <sub>Performance Gain</sub> |
 |-----------|----------|----------|----------|-----------|-----------------|
-| **Feature Matching** | 45ms | 12ms | 15ms | 18ms | 2.5-3.8x faster |
-| **Matrix Operations** | 85ms | 18ms | 22ms | 25ms | 3.4-4.7x faster |
-| **Point Cloud Processing** | 120ms | 25ms | 30ms | 35ms | 3.4-4.8x faster |
-| **Bundle Adjustment** | 200ms | 55ms | 65ms | 75ms | 2.7-3.6x faster |
+| <sub>**Feature Matching**</sub> | <sub>45ms</sub> | <sub>12ms</sub> | <sub>15ms</sub> | <sub>18ms</sub> | <sub>2.5-3.8x faster</sub> |
+| <sub>**Matrix Operations**</sub> | <sub>85ms</sub> | <sub>18ms</sub> | <sub>22ms</sub> | <sub>25ms</sub> | <sub>3.4-4.7x faster</sub> |
+| <sub>**Point Cloud Processing**</sub> | <sub>120ms</sub> | <sub>25ms</sub> | <sub>30ms</sub> | <sub>35ms</sub> | <sub>3.4-4.8x faster</sub> |
+| <sub>**Bundle Adjustment**</sub> | <sub>200ms</sub> | <sub>55ms</sub> | <sub>65ms</sub> | <sub>75ms</sub> | <sub>2.7-3.6x faster</sub> |
 
 ### Cross-Platform Feature Matrix
 
-| Feature | Linux | macOS Intel | macOS Apple Silicon | Windows + WSL2 |
+| <sub>Feature</sub> | <sub>Linux</sub> | <sub>macOS Intel</sub> | <sub>macOS Apple Silicon</sub> | <sub>Windows + WSL2</sub> |
 |---------|-------|-------------|-------------------|---------------|
-| **GUI Interface** | ✅ Full | ✅ Full | ✅ Full | ✅ Full |
-| **CUDA Acceleration** | ✅ Full | ❌ N/A | ❌ N/A | ✅ Full |
-| **ROCm Acceleration** | ✅ Full | ❌ N/A | ❌ N/A | ⚠️ Limited |
-| **Metal Acceleration** | ❌ N/A | ✅ Full | ✅ Optimized | ❌ N/A |
-| **ROS2 Integration** | ✅ Native | ✅ Full | ✅ Full | ✅ WSL2 |
-| **ARM Optimization** | ✅ Full | ⚠️ Limited | ✅ Optimized | ❌ N/A |
+| <sub>**GUI Interface**</sub> | <sub>✅ Full</sub> | <sub>✅ Full</sub> | <sub>✅ Full</sub> | <sub>✅ Full</sub> |
+| <sub>**CUDA Acceleration**</sub> | <sub>✅ Full</sub> | <sub>❌ N/A</sub> | <sub>❌ N/A</sub> | <sub>✅ Full</sub> |
+| <sub>**ROCm Acceleration**</sub> | <sub>✅ Full</sub> | <sub>❌ N/A</sub> | <sub>❌ N/A</sub> | <sub>⚠️ Limited</sub> |
+| <sub>**Metal Acceleration**</sub> | <sub>❌ N/A</sub> | <sub>✅ Full</sub> | <sub>✅ Optimized</sub> | <sub>❌ N/A</sub> |
+| <sub>**ROS2 Integration**</sub> | <sub>✅ Native</sub> | <sub>✅ Full</sub> | <sub>✅ Full</sub> | <sub>✅ WSL2</sub> |
+| <sub>**ARM Optimization**</sub> | <sub>✅ Full</sub> | <sub>⚠️ Limited</sub> | <sub>✅ Optimized</sub> | <sub>❌ N/A</sub> |
 
 
 ## 📋 Quick Start Guide
 
 ### Prerequisites
 
-| Requirement | Minimum | Recommended | Notes |
+| <sub>Requirement</sub> | <sub>Minimum</sub> | <sub>Recommended</sub> | <sub>Notes</sub> |
 |-------------|---------|-------------|-------|
-| **Operating System** | Ubuntu 20.04 | Ubuntu 22.04 LTS | Linux preferred for full features |
-| **Python Version** | 3.8 | 3.10+ | Type hints and performance improvements |
-| **Memory (RAM)** | 4GB | 8GB+ | Large point clouds require more memory |
-| **Storage** | 2GB | 10GB+ | Includes datasets and development tools |
-| **GPU Memory** | N/A | 4GB+ | For GPU acceleration (optional) |
+| <sub>**Operating System**</sub> | <sub>Ubuntu 20.04</sub> | <sub>Ubuntu 22.04 LTS</sub> | <sub>Linux preferred for full features</sub> |
+| <sub>**Python Version**</sub> | <sub>3.8</sub> | <sub>3.10+</sub> | <sub>Type hints and performance improvements</sub> |
+| <sub>**Memory (RAM)**</sub> | <sub>4GB</sub> | <sub>8GB+</sub> | <sub>Large point clouds require more memory</sub> |
+| <sub>**Storage**</sub> | <sub>2GB</sub> | <sub>10GB+</sub> | <sub>Includes datasets and development tools</sub> |
+| <sub>**GPU Memory**</sub> | <sub>N/A</sub> | <sub>4GB+</sub> | <sub>For GPU acceleration (optional)</sub> |
 
 ### Installation Methods
 
@@ -543,39 +543,39 @@ Python-SLAM implements **complete NASA STD-8739.8 compliance** with enterprise-g
 
 ### 🎯 Professional Documentation Links
 
-| Document Type | Purpose | Compliance Level |
+| <sub>Document Type</sub> | <sub>Purpose</sub> | <sub>Compliance Level</sub> |
 |---------------|---------|------------------|
-| [📖 Complete Documentation Suite](docs/README.md) | Master documentation index | NASA STD-8739.8 |
-| [🔧 Installation & Setup Guide](docs/installation.md) | Professional deployment | Enterprise-grade |
-| [⚡ Quick Start Tutorial](docs/quick_start.md) | Rapid deployment guide | Production-ready |
-| [🔌 API Reference](docs/api/README.md) | Technical integration | Developer-focused |
-| [🧪 Testing Framework](tests/README.md) | Quality assurance | Validation-complete |
-| [📊 Benchmarking Guide](docs/benchmarking.md) | Performance evaluation | Metrics-driven |
-| [🐳 Docker Deployment](docs/docker.md) | Container orchestration | Cloud-native |
+| <sub>[📖 Complete Documentation Suite](docs/README.md)</sub> | <sub>Master documentation index</sub> | <sub>NASA STD-8739.8</sub> |
+| <sub>[🔧 Installation & Setup Guide](docs/installation.md)</sub> | <sub>Professional deployment</sub> | <sub>Enterprise-grade</sub> |
+| <sub>[⚡ Quick Start Tutorial](docs/quick_start.md)</sub> | <sub>Rapid deployment guide</sub> | <sub>Production-ready</sub> |
+| <sub>[🔌 API Reference](docs/api/README.md)</sub> | <sub>Technical integration</sub> | <sub>Developer-focused</sub> |
+| <sub>[🧪 Testing Framework](tests/README.md)</sub> | <sub>Quality assurance</sub> | <sub>Validation-complete</sub> |
+| <sub>[📊 Benchmarking Guide](docs/benchmarking.md)</sub> | <sub>Performance evaluation</sub> | <sub>Metrics-driven</sub> |
+| <sub>[🐳 Docker Deployment](docs/docker.md)</sub> | <sub>Container orchestration</sub> | <sub>Cloud-native</sub> |
 
 ### 🔍 Quality Assurance Matrix
 
-| Quality Aspect | Implementation | Verification Method | Compliance Standard |
+| <sub>Quality Aspect</sub> | <sub>Implementation</sub> | <sub>Verification Method</sub> | <sub>Compliance Standard</sub> |
 |----------------|----------------|--------------------|--------------------|
-| **Requirements Traceability** | Complete RTM with bidirectional links | Automated verification | NASA STD-8739.8 |
-| **Design Verification** | Formal design reviews and documentation | Peer review process | Aerospace industry |
-| **Code Quality** | Automated linting, type checking, testing | CI/CD pipeline | Professional standards |
-| **Performance Validation** | Comprehensive benchmarking suite | Automated metrics | Quantitative verification |
-| **Security Compliance** | Dependency scanning, vulnerability assessment | Security pipeline | Enterprise security |
-| **Documentation Standards** | Formal documentation templates | Review and approval | Technical communication |
+| <sub>**Requirements Traceability**</sub> | <sub>Complete RTM with bidirectional links</sub> | <sub>Automated verification</sub> | <sub>NASA STD-8739.8</sub> |
+| <sub>**Design Verification**</sub> | <sub>Formal design reviews and documentation</sub> | <sub>Peer review process</sub> | <sub>Aerospace industry</sub> |
+| <sub>**Code Quality**</sub> | <sub>Automated linting, type checking, testing</sub> | <sub>CI/CD pipeline</sub> | <sub>Professional standards</sub> |
+| <sub>**Performance Validation**</sub> | <sub>Comprehensive benchmarking suite</sub> | <sub>Automated metrics</sub> | <sub>Quantitative verification</sub> |
+| <sub>**Security Compliance**</sub> | <sub>Dependency scanning, vulnerability assessment</sub> | <sub>Security pipeline</sub> | <sub>Enterprise security</sub> |
+| <sub>**Documentation Standards**</sub> | <sub>Formal documentation templates</sub> | <sub>Review and approval</sub> | <sub>Technical communication</sub> |
 
 ## 🛠️ Enterprise Deployment & Requirements
 
 ### System Requirements
 
-| Component | Minimum Specification | Recommended | Enterprise/Production |
+| <sub>Component</sub> | <sub>Minimum Specification</sub> | <sub>Recommended</sub> | <sub>Enterprise/Production</sub> |
 |-----------|----------------------|-------------|----------------------|
-| **Operating System** | Ubuntu 20.04 LTS | Ubuntu 22.04 LTS | RHEL 8+/Ubuntu 22.04 LTS |
-| **Python Runtime** | Python 3.8 | Python 3.10+ | Python 3.11+ with virtual environment |
-| **Memory (RAM)** | 4GB | 8GB | 16GB+ for high-throughput processing |
-| **Storage** | 2GB available | 10GB+ | 50GB+ with dataset storage |
-| **GPU Memory** | N/A (CPU fallback) | 4GB+ VRAM | 8GB+ VRAM for real-time processing |
-| **Network** | Local only | 1Gbps LAN | 10Gbps for distributed deployment |
+| <sub>**Operating System**</sub> | <sub>Ubuntu 20.04 LTS</sub> | <sub>Ubuntu 22.04 LTS</sub> | <sub>RHEL 8+/Ubuntu 22.04 LTS</sub> |
+| <sub>**Python Runtime**</sub> | <sub>Python 3.8</sub> | <sub>Python 3.10+</sub> | <sub>Python 3.11+ with virtual environment</sub> |
+| <sub>**Memory (RAM)**</sub> | <sub>4GB</sub> | <sub>8GB</sub> | <sub>16GB+ for high-throughput processing</sub> |
+| <sub>**Storage**</sub> | <sub>2GB available</sub> | <sub>10GB+</sub> | <sub>50GB+ with dataset storage</sub> |
+| <sub>**GPU Memory**</sub> | <sub>N/A (CPU fallback)</sub> | <sub>4GB+ VRAM</sub> | <sub>8GB+ VRAM for real-time processing</sub> |
+| <sub>**Network**</sub> | <sub>Local only</sub> | <sub>1Gbps LAN</sub> | <sub>10Gbps for distributed deployment</sub> |
 
 ### Technology Dependencies
 
@@ -716,14 +716,14 @@ spec:
 ### 📊 Performance & Monitoring
 
 #### Key Performance Indicators (KPIs)
-| Metric | Target | Monitoring Method | Alert Threshold |
+| <sub>Metric</sub> | <sub>Target</sub> | <sub>Monitoring Method</sub> | <sub>Alert Threshold</sub> |
 |--------|--------|-------------------|-----------------|
-| **Processing Latency** | <50ms | Real-time metrics | >100ms |
-| **Throughput** | 30 FPS | Frame rate monitoring | <20 FPS |
-| **Memory Usage** | <6GB | Resource monitoring | >7GB |
-| **GPU Utilization** | 70-90% | GPU metrics | <50% or >95% |
-| **Error Rate** | <0.1% | Error logging | >1% |
-| **Uptime** | 99.9% | Health checks | <99% |
+| <sub>**Processing Latency**</sub> | <sub><50ms</sub> | <sub>Real-time metrics</sub> | <sub>>100ms</sub> |
+| <sub>**Throughput**</sub> | <sub>30 FPS</sub> | <sub>Frame rate monitoring</sub> | <sub><20 FPS</sub> |
+| <sub>**Memory Usage**</sub> | <sub><6GB</sub> | <sub>Resource monitoring</sub> | <sub>>7GB</sub> |
+| <sub>**GPU Utilization**</sub> | <sub>70-90%</sub> | <sub>GPU metrics</sub> | <sub><50% or >95%</sub> |
+| <sub>**Error Rate**</sub> | <sub><0.1%</sub> | <sub>Error logging</sub> | <sub>>1%</sub> |
+| <sub>**Uptime**</sub> | <sub>99.9%</sub> | <sub>Health checks</sub> | <sub><99%</sub> |
 
 #### Monitoring Stack Integration
 ```python
@@ -1058,13 +1058,13 @@ dashboard.show()
 
 The project includes a robust testing framework with five comprehensive categories:
 
-| Test Category | Purpose | Coverage | Execution Time |
+| <sub>Test Category</sub> | <sub>Purpose</sub> | <sub>Coverage</sub> | <sub>Execution Time</sub> |
 |---------------|---------|----------|----------------|
-| **Comprehensive** | Core functionality across all components | 95%+ | ~60 seconds |
-| **GPU Acceleration** | Multi-backend GPU operations | 90%+ | ~45 seconds |
-| **GUI Components** | Interface and visualization testing | 85%+ | ~30 seconds |
-| **Benchmarking** | Performance evaluation systems | 95%+ | ~120 seconds |
-| **Integration** | Cross-component compatibility | 90%+ | ~90 seconds |
+| <sub>**Comprehensive**</sub> | <sub>Core functionality across all components</sub> | <sub>95%+</sub> | <sub>~60 seconds</sub> |
+| <sub>**GPU Acceleration**</sub> | <sub>Multi-backend GPU operations</sub> | <sub>90%+</sub> | <sub>~45 seconds</sub> |
+| <sub>**GUI Components**</sub> | <sub>Interface and visualization testing</sub> | <sub>85%+</sub> | <sub>~30 seconds</sub> |
+| <sub>**Benchmarking**</sub> | <sub>Performance evaluation systems</sub> | <sub>95%+</sub> | <sub>~120 seconds</sub> |
+| <sub>**Integration**</sub> | <sub>Cross-component compatibility</sub> | <sub>90%+</sub> | <sub>~90 seconds</sub> |
 
 ### Running Tests
 
@@ -1117,14 +1117,14 @@ The project uses GitHub Actions for automated testing:
 
 ### Real-World Performance Metrics
 
-| Metric | CPU Baseline | CUDA GPU | ROCm GPU | Metal GPU | ARM Optimized |
+| <sub>Metric</sub> | <sub>CPU Baseline</sub> | <sub>CUDA GPU</sub> | <sub>ROCm GPU</sub> | <sub>Metal GPU</sub> | <sub>ARM Optimized</sub> |
 |--------|-------------|----------|----------|-----------|---------------|
-| **Feature Extraction** | 85ms | 22ms | 28ms | 31ms | 65ms |
-| **Feature Matching** | 120ms | 18ms | 24ms | 27ms | 95ms |
-| **Pose Estimation** | 45ms | 12ms | 15ms | 17ms | 38ms |
-| **Bundle Adjustment** | 300ms | 75ms | 95ms | 110ms | 245ms |
-| **Loop Closure** | 450ms | 125ms | 155ms | 180ms | 380ms |
-| **Memory Usage** | 2.1GB | 1.8GB | 1.9GB | 2.0GB | 1.5GB |
+| <sub>**Feature Extraction**</sub> | <sub>85ms</sub> | <sub>22ms</sub> | <sub>28ms</sub> | <sub>31ms</sub> | <sub>65ms</sub> |
+| <sub>**Feature Matching**</sub> | <sub>120ms</sub> | <sub>18ms</sub> | <sub>24ms</sub> | <sub>27ms</sub> | <sub>95ms</sub> |
+| <sub>**Pose Estimation**</sub> | <sub>45ms</sub> | <sub>12ms</sub> | <sub>15ms</sub> | <sub>17ms</sub> | <sub>38ms</sub> |
+| <sub>**Bundle Adjustment**</sub> | <sub>300ms</sub> | <sub>75ms</sub> | <sub>95ms</sub> | <sub>110ms</sub> | <sub>245ms</sub> |
+| <sub>**Loop Closure**</sub> | <sub>450ms</sub> | <sub>125ms</sub> | <sub>155ms</sub> | <sub>180ms</sub> | <sub>380ms</sub> |
+| <sub>**Memory Usage**</sub> | <sub>2.1GB</sub> | <sub>1.8GB</sub> | <sub>1.9GB</sub> | <sub>2.0GB</sub> | <sub>1.5GB</sub> |
 
 ### Scalability Testing
 
@@ -1152,13 +1152,13 @@ graph LR
 
 ### Platform Performance Comparison
 
-| Platform | Real-time FPS | Max Point Cloud | Memory Efficiency | GPU Utilization |
+| <sub>Platform</sub> | <sub>Real-time FPS</sub> | <sub>Max Point Cloud</sub> | <sub>Memory Efficiency</sub> | <sub>GPU Utilization</sub> |
 |----------|---------------|-----------------|-------------------|-----------------|
-| **Linux + CUDA** | 32.5 FPS | 150K points | 95% | 85% |
-| **Linux + ROCm** | 28.1 FPS | 125K points | 92% | 78% |
-| **macOS + Metal** | 25.7 FPS | 110K points | 88% | 72% |
-| **Windows + WSL2** | 24.2 FPS | 100K points | 85% | 68% |
-| **ARM Embedded** | 18.3 FPS | 75K points | 98% | 45% |
+| <sub>**Linux + CUDA**</sub> | <sub>32.5 FPS</sub> | <sub>150K points</sub> | <sub>95%</sub> | <sub>85%</sub> |
+| <sub>**Linux + ROCm**</sub> | <sub>28.1 FPS</sub> | <sub>125K points</sub> | <sub>92%</sub> | <sub>78%</sub> |
+| <sub>**macOS + Metal**</sub> | <sub>25.7 FPS</sub> | <sub>110K points</sub> | <sub>88%</sub> | <sub>72%</sub> |
+| <sub>**Windows + WSL2**</sub> | <sub>24.2 FPS</sub> | <sub>100K points</sub> | <sub>85%</sub> | <sub>68%</sub> |
+| <sub>**ARM Embedded**</sub> | <sub>18.3 FPS</sub> | <sub>75K points</sub> | <sub>98%</sub> | <sub>45%</sub> |
 
 ## 🤝 Contributing & Development
 
@@ -1224,14 +1224,14 @@ python tests/run_tests.py --development
 
 ### Contribution Areas
 
-| Area | Complexity | Skills Required | Impact |
+| <sub>Area</sub> | <sub>Complexity</sub> | <sub>Skills Required</sub> | <sub>Impact</sub> |
 |------|------------|-----------------|--------|
-| **SLAM Algorithms** | High | Computer Vision, Math | High |
-| **GPU Backends** | Medium | GPU Programming | High |
-| **GUI Enhancements** | Medium | PyQt, OpenGL | Medium |
-| **Documentation** | Low | Technical Writing | High |
-| **Testing** | Medium | Software Testing | High |
-| **Performance Optimization** | High | Profiling, Optimization | High |
+| <sub>**SLAM Algorithms**</sub> | <sub>High</sub> | <sub>Computer Vision, Math</sub> | <sub>High</sub> |
+| <sub>**GPU Backends**</sub> | <sub>Medium</sub> | <sub>GPU Programming</sub> | <sub>High</sub> |
+| <sub>**GUI Enhancements**</sub> | <sub>Medium</sub> | <sub>PyQt, OpenGL</sub> | <sub>Medium</sub> |
+| <sub>**Documentation**</sub> | <sub>Low</sub> | <sub>Technical Writing</sub> | <sub>High</sub> |
+| <sub>**Testing**</sub> | <sub>Medium</sub> | <sub>Software Testing</sub> | <sub>High</sub> |
+| <sub>**Performance Optimization**</sub> | <sub>High</sub> | <sub>Profiling, Optimization</sub> | <sub>High</sub> |
 
 ## 📚 Documentation & Resources
 
@@ -1260,13 +1260,13 @@ graph TB
 
 ### Learning Resources
 
-| Resource Type | Description | Audience | Estimated Time |
+| <sub>Resource Type</sub> | <sub>Description</sub> | <sub>Audience</sub> | <sub>Estimated Time</sub> |
 |---------------|-------------|----------|----------------|
-| **Quick Start Guide** | Basic setup and first run | Beginners | 30 minutes |
-| **API Documentation** | Complete API reference | Developers | 2-4 hours |
-| **Architecture Guide** | System design and components | Advanced | 4-6 hours |
-| **Performance Tuning** | Optimization techniques | Experts | 6-8 hours |
-| **Research Papers** | Academic foundations | Researchers | 10+ hours |
+| <sub>**Quick Start Guide**</sub> | <sub>Basic setup and first run</sub> | <sub>Beginners</sub> | <sub>30 minutes</sub> |
+| <sub>**API Documentation**</sub> | <sub>Complete API reference</sub> | <sub>Developers</sub> | <sub>2-4 hours</sub> |
+| <sub>**Architecture Guide**</sub> | <sub>System design and components</sub> | <sub>Advanced</sub> | <sub>4-6 hours</sub> |
+| <sub>**Performance Tuning**</sub> | <sub>Optimization techniques</sub> | <sub>Experts</sub> | <sub>6-8 hours</sub> |
+| <sub>**Research Papers**</sub> | <sub>Academic foundations</sub> | <sub>Researchers</sub> | <sub>10+ hours</sub> |
 
 ## � License & Citation
 
@@ -1292,24 +1292,24 @@ If you use Python-SLAM in your research, please cite:
 
 ### Acknowledgments
 
-| Component | Acknowledgment | Contribution |
+| <sub>Component</sub> | <sub>Acknowledgment</sub> | <sub>Contribution</sub> |
 |-----------|----------------|--------------|
-| **OpenCV** | Computer vision foundation | Feature detection, image processing |
-| **PyTorch** | GPU acceleration framework | Tensor operations, neural networks |
-| **ROS2** | Robotics middleware | Communication, lifecycle management |
-| **Qt Framework** | GUI development | Cross-platform user interface |
-| **SLAM Community** | Research foundation | Algorithms, evaluation metrics |
+| <sub>**OpenCV**</sub> | <sub>Computer vision foundation</sub> | <sub>Feature detection, image processing</sub> |
+| <sub>**PyTorch**</sub> | <sub>GPU acceleration framework</sub> | <sub>Tensor operations, neural networks</sub> |
+| <sub>**ROS2**</sub> | <sub>Robotics middleware</sub> | <sub>Communication, lifecycle management</sub> |
+| <sub>**Qt Framework**</sub> | <sub>GUI development</sub> | <sub>Cross-platform user interface</sub> |
+| <sub>**SLAM Community**</sub> | <sub>Research foundation</sub> | <sub>Algorithms, evaluation metrics</sub> |
 
 ## 📞 Support & Community
 
 ### Getting Help
 
-| Support Channel | Response Time | Best For |
+| <sub>Support Channel</sub> | <sub>Response Time</sub> | <sub>Best For</sub> |
 |----------------|---------------|----------|
-| **GitHub Issues** | 24-48 hours | Bug reports, feature requests |
-| **GitHub Discussions** | 12-24 hours | Questions, general discussion |
-| **Documentation** | Immediate | Setup, API reference |
-| **Example Code** | Immediate | Implementation guidance |
+| <sub>**GitHub Issues**</sub> | <sub>24-48 hours</sub> | <sub>Bug reports, feature requests</sub> |
+| <sub>**GitHub Discussions**</sub> | <sub>12-24 hours</sub> | <sub>Questions, general discussion</sub> |
+| <sub>**Documentation**</sub> | <sub>Immediate</sub> | <sub>Setup, API reference</sub> |
+| <sub>**Example Code**</sub> | <sub>Immediate</sub> | <sub>Implementation guidance</sub> |
 
 ### Community Guidelines
 
@@ -1335,17 +1335,17 @@ If you use Python-SLAM in your research, please cite:
 
 ## �️ Tech Stack
 
-| Category | Technologies |
+| <sub>Category</sub> | <sub>Technologies</sub> |
 |----------|-------------|
-| **Core Language** | Python 3.10+ |
-| **Robotics Framework** | ROS 2 Humble Hawksbill |
-| **Computer Vision** | OpenCV, NumPy, SciPy |
-| **Flight Control** | PX4 Autopilot, MAVSDK |
-| **GUI Framework** | PyQt5, PyOpenGL |
-| **Messaging** | ZeroMQ (ZMQ), MAVLink |
-| **Containerization** | Docker, Docker Compose |
-| **Visualization** | PyQtGraph, Matplotlib |
-| **Development** | VS Code, pytest, black |
+| <sub>**Core Language**</sub> | <sub>Python 3.10+</sub> |
+| <sub>**Robotics Framework**</sub> | <sub>ROS 2 Humble Hawksbill</sub> |
+| <sub>**Computer Vision**</sub> | <sub>OpenCV, NumPy, SciPy</sub> |
+| <sub>**Flight Control**</sub> | <sub>PX4 Autopilot, MAVSDK</sub> |
+| <sub>**GUI Framework**</sub> | <sub>PyQt5, PyOpenGL</sub> |
+| <sub>**Messaging**</sub> | <sub>ZeroMQ (ZMQ), MAVLink</sub> |
+| <sub>**Containerization**</sub> | <sub>Docker, Docker Compose</sub> |
+| <sub>**Visualization**</sub> | <sub>PyQtGraph, Matplotlib</sub> |
+| <sub>**Development**</sub> | <sub>VS Code, pytest, black</sub> |
 
 A comprehensive **Simultaneous Localization and Mapping (SLAM)** implementation in Python with advanced ROS 2 integration, PX4 flight control, and containerized deployment capabilities. This project provides a complete SLAM framework with advanced computer vision techniques and integration capabilities for autonomous navigation applications.
 
@@ -1457,16 +1457,16 @@ Our approach:
 
 ## 🎯 Technology Benefits Summary
 
-| Technology | Primary Benefit | SLAM-Specific Advantage |
+| <sub>Technology</sub> | <sub>Primary Benefit</sub> | <sub>SLAM-Specific Advantage</sub> |
 |------------|----------------|------------------------|
-| **ROS2 Humble** | Standardized robotics middleware | Real-time sensor fusion with deterministic timing |
-| **CycloneDX DDS** | High-performance communication | Sub-millisecond point cloud and pose updates |
-| **ZeroMQ** | Lightweight messaging | Efficient visualization data streaming |
-| **PyQt5 + OpenGL** | Professional GUI framework | Hardware-accelerated 3D point cloud rendering |
-| **Docker Multi-Container** | Deployment consistency | Performance isolation between SLAM and GUI |
-| **PX4 + MAVSDK** | Flight control integration | Direct vehicle state fusion with SLAM estimates |
-| **OpenCV** | Computer vision algorithms | Optimized feature extraction and pose estimation |
-| **Python 3.10+** | Rapid development | Rich scientific computing ecosystem |
+| <sub>**ROS2 Humble**</sub> | <sub>Standardized robotics middleware</sub> | <sub>Real-time sensor fusion with deterministic timing</sub> |
+| <sub>**CycloneDX DDS**</sub> | <sub>High-performance communication</sub> | <sub>Sub-millisecond point cloud and pose updates</sub> |
+| <sub>**ZeroMQ**</sub> | <sub>Lightweight messaging</sub> | <sub>Efficient visualization data streaming</sub> |
+| <sub>**PyQt5 + OpenGL**</sub> | <sub>Professional GUI framework</sub> | <sub>Hardware-accelerated 3D point cloud rendering</sub> |
+| <sub>**Docker Multi-Container**</sub> | <sub>Deployment consistency</sub> | <sub>Performance isolation between SLAM and GUI</sub> |
+| <sub>**PX4 + MAVSDK**</sub> | <sub>Flight control integration</sub> | <sub>Direct vehicle state fusion with SLAM estimates</sub> |
+| <sub>**OpenCV**</sub> | <sub>Computer vision algorithms</sub> | <sub>Optimized feature extraction and pose estimation</sub> |
+| <sub>**Python 3.10+**</sub> | <sub>Rapid development</sub> | <sub>Rich scientific computing ecosystem</sub> |
 
 ## 🔬 Technical Performance Metrics
 
@@ -1494,17 +1494,17 @@ Our approach:
 
 ## 🛠️ Tech Stack
 
-| Category | Technologies |
+| <sub>Category</sub> | <sub>Technologies</sub> |
 |----------|-------------|
-| **Core Language** | Python 3.10+ |
-| **Robotics Framework** | ROS 2 Humble Hawksbill |
-| **Computer Vision** | OpenCV, NumPy, SciPy |
-| **Flight Control** | PX4 Autopilot, MAVSDK |
-| **GUI Framework** | PyQt5, PyOpenGL |
-| **Messaging** | ZeroMQ (ZMQ), MAVLink |
-| **Containerization** | Docker, Docker Compose |
-| **Visualization** | PyQtGraph, Matplotlib |
-| **Development** | VS Code, pytest, black |
+| <sub>**Core Language**</sub> | <sub>Python 3.10+</sub> |
+| <sub>**Robotics Framework**</sub> | <sub>ROS 2 Humble Hawksbill</sub> |
+| <sub>**Computer Vision**</sub> | <sub>OpenCV, NumPy, SciPy</sub> |
+| <sub>**Flight Control**</sub> | <sub>PX4 Autopilot, MAVSDK</sub> |
+| <sub>**GUI Framework**</sub> | <sub>PyQt5, PyOpenGL</sub> |
+| <sub>**Messaging**</sub> | <sub>ZeroMQ (ZMQ), MAVLink</sub> |
+| <sub>**Containerization**</sub> | <sub>Docker, Docker Compose</sub> |
+| <sub>**Visualization**</sub> | <sub>PyQtGraph, Matplotlib</sub> |
+| <sub>**Development**</sub> | <sub>VS Code, pytest, black</sub> |
 
 A comprehensive **Simultaneous Localization and Mapping (SLAM)** implementation in Python with advanced ROS 2 integration, PX4 flight control, and containerized deployment capabilities. This project provides a complete SLAM framework with advanced computer vision techniques and integration capabilities for autonomous navigation applications.
 
@@ -2026,17 +2026,17 @@ For technical support or deployment assistance:
 
 ## 🛠️ Tech Stack
 
-| Category | Technologies |
+| <sub>Category</sub> | <sub>Technologies</sub> |
 |----------|-------------|
-| **Core Language** | Python 3.10+ |
-| **Robotics Framework** | ROS 2 Humble Hawksbill |
-| **Computer Vision** | OpenCV, NumPy, SciPy |
-| **Flight Control** | PX4 Autopilot, MAVSDK |
-| **GUI Framework** | PyQt5, PyOpenGL |
-| **Messaging** | ZeroMQ (ZMQ), MAVLink |
-| **Containerization** | Docker, Docker Compose |
-| **Visualization** | PyQtGraph, Matplotlib |
-| **Development** | VS Code, pytest, black |
+| <sub>**Core Language**</sub> | <sub>Python 3.10+</sub> |
+| <sub>**Robotics Framework**</sub> | <sub>ROS 2 Humble Hawksbill</sub> |
+| <sub>**Computer Vision**</sub> | <sub>OpenCV, NumPy, SciPy</sub> |
+| <sub>**Flight Control**</sub> | <sub>PX4 Autopilot, MAVSDK</sub> |
+| <sub>**GUI Framework**</sub> | <sub>PyQt5, PyOpenGL</sub> |
+| <sub>**Messaging**</sub> | <sub>ZeroMQ (ZMQ), MAVLink</sub> |
+| <sub>**Containerization**</sub> | <sub>Docker, Docker Compose</sub> |
+| <sub>**Visualization**</sub> | <sub>PyQtGraph, Matplotlib</sub> |
+| <sub>**Development**</sub> | <sub>VS Code, pytest, black</sub> |
 
 A comprehensive **Simultaneous Localization and Mapping (SLAM)** implementation in Python with advanced ROS 2 integration, PX4 flight control, and containerized deployment capabilities. This project provides a complete SLAM framework with advanced computer vision techniques and integration capabilities for autonomous navigation applications.
 
@@ -2477,14 +2477,14 @@ Each technology was chosen based on:
 
 ### Comparison with Alternatives
 
-| Aspect | This Project | Traditional SLAM | Research SLAM |
+| <sub>Aspect</sub> | <sub>This Project</sub> | <sub>Traditional SLAM</sub> | <sub>Research SLAM</sub> |
 |--------|-------------|------------------|---------------|
-| **Deployment** | Docker multi-container | Manual setup | Academic environment |
-| **Integration** | ROS2 + MAVLink ready | Limited | Research-focused |
-| **Performance** | Production optimized | Variable | Not prioritized |
-| **Development** | Professional tooling | Basic | Research tools |
-| **Visualization** | Advanced PyQt5 GUI | Basic/None | Research-specific |
-| **Communication** | Multi-layer (DDS+ZMQ) | Single protocol | Ad-hoc |
+| <sub>**Deployment**</sub> | <sub>Docker multi-container</sub> | <sub>Manual setup</sub> | <sub>Academic environment</sub> |
+| <sub>**Integration**</sub> | <sub>ROS2 + MAVLink ready</sub> | <sub>Limited</sub> | <sub>Research-focused</sub> |
+| <sub>**Performance**</sub> | <sub>Production optimized</sub> | <sub>Variable</sub> | <sub>Not prioritized</sub> |
+| <sub>**Development**</sub> | <sub>Professional tooling</sub> | <sub>Basic</sub> | <sub>Research tools</sub> |
+| <sub>**Visualization**</sub> | <sub>Advanced PyQt5 GUI</sub> | <sub>Basic/None</sub> | <sub>Research-specific</sub> |
+| <sub>**Communication**</sub> | <sub>Multi-layer (DDS+ZMQ)</sub> | <sub>Single protocol</sub> | <sub>Ad-hoc</sub> |
 
 ### Future-Proofing Strategy
 
@@ -2631,14 +2631,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 #### Contribution Areas
 
-| Area | Skill Level | Technologies | Impact |
+| <sub>Area</sub> | <sub>Skill Level</sub> | <sub>Technologies</sub> | <sub>Impact</sub> |
 |------|-------------|--------------|--------|
-| **Algorithm Development** | Advanced | NumPy, OpenCV, PyTorch | High |
-| **GPU Optimization** | Expert | CUDA, ROCm, Metal | High |
-| **GUI Enhancement** | Intermediate | PyQt6, OpenGL | Medium |
-| **Documentation** | Beginner | Markdown, Sphinx | Medium |
-| **Testing** | Intermediate | Pytest, CI/CD | High |
-| **DevOps** | Advanced | Docker, Kubernetes | Medium |
+| <sub>**Algorithm Development**</sub> | <sub>Advanced</sub> | <sub>NumPy, OpenCV, PyTorch</sub> | <sub>High</sub> |
+| <sub>**GPU Optimization**</sub> | <sub>Expert</sub> | <sub>CUDA, ROCm, Metal</sub> | <sub>High</sub> |
+| <sub>**GUI Enhancement**</sub> | <sub>Intermediate</sub> | <sub>PyQt6, OpenGL</sub> | <sub>Medium</sub> |
+| <sub>**Documentation**</sub> | <sub>Beginner</sub> | <sub>Markdown, Sphinx</sub> | <sub>Medium</sub> |
+| <sub>**Testing**</sub> | <sub>Intermediate</sub> | <sub>Pytest, CI/CD</sub> | <sub>High</sub> |
+| <sub>**DevOps**</sub> | <sub>Advanced</sub> | <sub>Docker, Kubernetes</sub> | <sub>Medium</sub> |
 
 ### 🏢 Enterprise Support & Services
 
@@ -2694,13 +2694,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ### Support Channels
 
-| Support Type | Channel | Response Time | Availability |
+| <sub>Support Type</sub> | <sub>Channel</sub> | <sub>Response Time</sub> | <sub>Availability</sub> |
 |--------------|---------|---------------|--------------|
-| **Community Support** | GitHub Issues | 48 hours | Best effort |
-| **Technical Questions** | GitHub Discussions | 24 hours | Community-driven |
-| **Documentation** | Project Documentation | Immediate | 24/7 |
-| **Enterprise Support** | Professional Services | 4 hours | Business hours |
-| **Critical Issues** | Priority Support Contract | 1 hour | 24/7 |
+| <sub>**Community Support**</sub> | <sub>GitHub Issues</sub> | <sub>48 hours</sub> | <sub>Best effort</sub> |
+| <sub>**Technical Questions**</sub> | <sub>GitHub Discussions</sub> | <sub>24 hours</sub> | <sub>Community-driven</sub> |
+| <sub>**Documentation**</sub> | <sub>Project Documentation</sub> | <sub>Immediate</sub> | <sub>24/7</sub> |
+| <sub>**Enterprise Support**</sub> | <sub>Professional Services</sub> | <sub>4 hours</sub> | <sub>Business hours</sub> |
+| <sub>**Critical Issues**</sub> | <sub>Priority Support Contract</sub> | <sub>1 hour</sub> | <sub>24/7</sub> |
 
 ### Professional Services Contact
 - **Enterprise Inquiries**: enterprise@python-slam.org
